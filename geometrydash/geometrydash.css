@@ -1,0 +1,19 @@
+/*------------------header formatting--------------------------------------------------*/
+#uhead {
+    background: linear-gradient(#01185a, #0602fd);
+    width: 100%;
+    display: flex;
+   }
+   /*------------------formatting the avatar-------*/
+   #logo {
+    width: 50%;
+    max-width: 100%;
+    max-height: 100%;
+   }
+   /*------------------heading for the title-------*/
+   #myh1 {
+    font-size: 50px;
+    color: rgb(255, 230, 0);
+    text-align: center;
+    padding-top: 20px;
+   }
