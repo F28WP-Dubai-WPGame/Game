@@ -1,7 +1,9 @@
 
 /*------------------background-------*/
 body{
-    background-image: url('image1.jpeg');
+    background-image: url('GeometryDashMenu.png');
+    background-repeat: no-repeat;
+    background-size: 100% 430%;
 }
 /*------------------formatting the logo-------*/
 #logo {
@@ -21,10 +23,10 @@ body{
     color: white;
     text-decoration: none;
     position: absolute;
-    left: 243px;
-    top: 203px;
-    width: 101px;
-    height: 101px;
+    left: 330px;
+    top: 240px;
+    width: 125px;
+    height: 100px;
 }
 
 #character:hover{
@@ -35,9 +37,9 @@ body{
     color: white;
     text-decoration: none;
     position: absolute;
-    left: 400px;
-    bottom: 210px;
-    width: 160px;
+    left: 545px;
+    top: 205px;
+    width: 190px;
     height: 160px;
 }
 
@@ -49,10 +51,10 @@ body{
     color: white;
     text-decoration: none;
     position: absolute;
-    right: 243px;
-    top: 203px;
-    width: 101px;
-    height: 101px;
+    right: 330px;
+    top: 240px;
+    width: 125px;
+    height: 100px;
 
 }
 
