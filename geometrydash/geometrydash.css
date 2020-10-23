@@ -28,7 +28,7 @@ body{
 }
 
 #character:hover{
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 #game {
@@ -42,7 +42,7 @@ body{
 }
 
 #game:hover{
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
 }
 
 #settings {
@@ -57,5 +57,5 @@ body{
 }
 
 #settings:hover{
-    background-color: rgba(255, 255, 255, 0.5);
+    background-color: rgba(255, 255, 255, 0.3);
 }
