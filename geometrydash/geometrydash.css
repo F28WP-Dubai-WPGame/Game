@@ -1,4 +1,8 @@
 
+/*------------------background-------*/
+body{
+    background-image: url('image1.jpeg');
+}
 /*------------------formatting the logo-------*/
 #logo {
     width: 10%;
