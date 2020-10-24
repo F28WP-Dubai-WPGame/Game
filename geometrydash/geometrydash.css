@@ -1,9 +1,13 @@
 
+*{
+    padding: 0;
+    margin: 0;
+}
 /*------------------background-------*/
 body{
     background-image: url('GeometryDashMenu.png');
     background-repeat: no-repeat;
-    background-size: 100% 430%;
+    background-size: 100%;
 }
 /*------------------clickable logo-------*/
 #logo img{
