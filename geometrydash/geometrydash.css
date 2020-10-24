@@ -131,10 +131,6 @@ body{
     height: 70px;
 }
 
-#achievements:hover{
-    background-color: rgba(255, 255, 255, 0.5);
-}
-
 #settings1 {
     color: white;
     text-decoration: none;
@@ -143,10 +139,6 @@ body{
     bottom: 50px;
     width: 75px;
     height: 70px;
-}
-
-#settings1:hover{
-    background-color: rgba(255, 255, 255, 0.5);
 }
 
 #stats {
@@ -159,9 +151,6 @@ body{
     height: 70px;
 }
 
-#stats:hover{
-    background-color: rgba(255, 255, 255, 0.5);
-}
 
 #music {
     color: white;
@@ -174,9 +163,6 @@ body{
 
 }
 
-#music:hover{
-    background-color: rgba(255, 255, 255, 0.5);
-}
 
 #moregames {
     color: white;
