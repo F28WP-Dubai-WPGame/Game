@@ -5,7 +5,7 @@ body{
     background-repeat: no-repeat;
     background-size: 100% 430%;
 }
-/*------------------formatting the logo-------*/
+/*------------------clickable logo-------*/
 #logo img{
     width: 10%;
     max-width: 100%;
@@ -21,9 +21,19 @@ body{
     width: 125px;
     height: 125px;
 }
-#logo a:hover{
-    background-color: rgba(255, 255, 255, 0.5);
+
+/*------------------clickable heading geometry dash-------*/
+#geometrydashbutton{
+    color: white;
+    text-decoration: none;
+    position: absolute;
+    left: 150px;
+    top: 35px;
+    width: 980px;
+    height: 115px;
+
 }
+
 /*------------------buttons-------*/
 #character {
     color: white;
