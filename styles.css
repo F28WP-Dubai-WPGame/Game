@@ -5,7 +5,6 @@
 }
 /*------------------background-------*/
 body{
-    /*background-image: url('GeometryDashMenu.png');*/
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center center;
@@ -19,6 +18,7 @@ body{
     width: 125px;
     height: 125px;
 }
+
 /*------------------clickable heading geometry dash-------*/
 #geometrydashbutton{
     color: white;
