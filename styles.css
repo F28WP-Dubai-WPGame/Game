@@ -13,10 +13,14 @@ body{
 /*------------------clickable logo-------*/
 #logo{
     position: absolute;
-    left: 0%;
-    top: 0%;
+    left: 1%;
+    top: 1%;
     width: 125px;
     height: 125px;
+}
+#logo:hover{
+    width: 130px;
+    height: 130px;
 }
 
 /*------------------clickable heading geometry dash-------*/
@@ -29,6 +33,10 @@ body{
     width: 980px;
     height: 115px;
 
+}
+#geometrydashbutton:hover{
+    width: 990px;
+    height: 120px;
 }
 
 /*------------------buttons-------*/
@@ -43,7 +51,8 @@ body{
 }
 
 #character:hover{
-    background-color: rgba(255, 255, 255, 0.5);
+    width: 130px;
+    height: 135px;
 }
 
 #play {
@@ -57,7 +66,8 @@ body{
 }
 
 #play:hover{
-    background-color: rgba(255, 255, 255, 0.5);
+    width: 200px;
+    height: 200px;
 }
 
 #settings {
@@ -72,7 +82,8 @@ body{
 }
 
 #settings:hover{
-    background-color: rgba(255, 255, 255, 0.5);
+    width: 130px;
+    height: 135px;
 }
 /*------------------links-------*/
 #facebook {
@@ -129,7 +140,8 @@ body{
 }
 
 #achievements:hover{
-    background-color: rgba(255, 255, 255, 0.5);
+    width: 100px;
+    height: 100px;
 }
 
 #settings1 {
@@ -143,7 +155,8 @@ body{
 }
 
 #settings1:hover{
-    background-color: rgba(255, 255, 255, 0.5);
+    width: 100px;
+    height: 100px;
 }
 
 #stats {
@@ -157,7 +170,8 @@ body{
 }
 
 #stats:hover{
-    background-color: rgba(255, 255, 255, 0.5);
+    width: 100px;
+    height: 100px;
 }
 
 #music {
