@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     0, 0, 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 0, 0, 0,
     0, 0, 0, 1, 2, 1, 2, 1, 9, 9, 9, 9, 1, 2, 1, 2, 1, 0, 0, 0,
     1, 1, 1, 1, 2, 1, 2, 1, 9, 9, 9, 9, 1, 2, 1, 2, 1, 1, 1, 1,
-    2, 2, 2, 2, 2, 2, 2, 1, 9, 9, 9, 9, 1, 2, 2, 2, 2, 2, 2, 2,
+    0, 2, 2, 2, 2, 2, 2, 1, 9, 9, 9, 9, 1, 2, 2, 2, 2, 2, 2, 0,
     1, 1, 1, 1, 2, 1, 2, 1, 9, 9, 9, 9, 1, 2, 1, 2, 1, 1, 1, 1,
     0, 0, 0, 1, 2, 1, 2, 1, 1, 1, 1, 1, 1, 2, 1, 2, 1, 0, 0, 0,
     0, 0, 0, 1, 2, 1, 2, 0, 0, 0, 0, 0, 0, 2, 1, 2, 1, 0, 0, 0,
@@ -97,11 +97,110 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     squares[pacmanCurrentIndex].classList.add('pacman')
-    // pacDotEaten()
-    // powerPelletEaten()
-    // checkForGameOver()
-    // checkForWin()
+    pacDotEaten()
+    powerPelletEaten()
+    checkForGameOver()
+    checkForWin()
   }
   document.addEventListener('keyup', movePacman)
+
+  function pacDotEaten() {
+    if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
+      score++
+      scoreDisplay.innerHTML = score
+      squares[pacmanCurrentIndex].classList.remove('pac-dot')
+    }
+  }
+
+  function powerPelletEaten() {
+    if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
+      score += 10
+      ghosts.forEach(ghost => ghost.isScared = true)
+      setTimeout(unScareGhosts, 10000)
+      squares[pacmanCurrentIndex].classList.remove('power-pellet')
+    }
+  }
+
+  function unScareGhosts() {
+    ghosts.forEach(ghost => ghost.isScared = false)
+  }
+
+  class Ghost {
+    constructor(className, startIndex, speed) {
+      this.className = className
+      this.startIndex = startIndex
+      this.speed = speed
+      this.currentIndex = startIndex
+      this.isScared = false
+      this.timerId = NaN
+    }
+  }
+
+  ghosts = [
+    new Ghost('blinky', 209, 250),
+    new Ghost('pinky', 210, 250),
+    new Ghost('inky', 248, 250),
+    new Ghost('clyde', 251, 250)
+  ]
+
+  ghosts.forEach(ghost => {
+    squares[ghost.currentIndex].classList.add(ghost.className)
+    squares[ghost.currentIndex].classList.add('ghost')
+  })
+
+  ghosts.forEach(ghost => moveGhost(ghost))
+
+  function moveGhost(ghost) {
+    const directions = [-1, +1, width, -width]
+    let direction = directions[Math.floor(Math.random() * directions.length)]
+
+    ghost.timerId = setInterval(function () {
+      //if the next squre your ghost is going to go to does not have a ghost and does not have a wall
+      if (!squares[ghost.currentIndex + direction].classList.contains('ghost') &&
+        !squares[ghost.currentIndex + direction].classList.contains('wall')) {
+        //remove the ghosts classes
+        squares[ghost.currentIndex].classList.remove(ghost.className)
+        squares[ghost.currentIndex].classList.remove('ghost', 'scared')
+        //move into that space
+        ghost.currentIndex += direction
+        squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
+        //else find a new random direction ot go in
+      } else direction = directions[Math.floor(Math.random() * directions.length)]
+
+      //if the ghost is currently scared
+      if (ghost.isScared) {
+        squares[ghost.currentIndex].classList.add('scared')
+      }
+
+      //if the ghost is currently scared and pacman is on it
+      if (ghost.isScared && squares[ghost.currentIndex].classList.contains('pacman')) {
+        squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared')
+        ghost.currentIndex = ghost.startIndex
+        score += 100
+        squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
+      }
+      checkForGameOver()
+    }, ghost.speed)
+  }
+
+  //check for a game over
+  function checkForGameOver() {
+    if (squares[pacmanCurrentIndex].classList.contains('ghost') &&
+      !squares[pacmanCurrentIndex].classList.contains('scared')) {
+      ghosts.forEach(ghost => clearInterval(ghost.timerId))
+      document.removeEventListener('keyup', movePacman)
+      setTimeout(function () { alert("Game Over"); }, 500)
+    }
+  }
+
+  //check for a win - more is when this score is reached
+  function checkForWin() {
+    if (score === 274) {
+      ghosts.forEach(ghost => clearInterval(ghost.timerId))
+      document.removeEventListener('keyup', movePacman)
+      setTimeout(function () { alert("You have WON!"); }, 500)
+    }
+  }
+
 
 })
