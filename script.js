@@ -62,18 +62,16 @@ document.addEventListener('DOMContentLoaded', () => {
     switch (e.keyCode) {
       case 37:
         if (
-          pacmanCurrentIndex % width !== 0 &&
           !squares[pacmanCurrentIndex - 1].classList.contains('wall') &&
           !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair')
         )
           pacmanCurrentIndex -= 1
-        if (squares[pacmanCurrentIndex - 1] === squares[363]) {
-          pacmanCurrentIndex = 391
+        if (squares[pacmanCurrentIndex - 1] === squares[219]) {
+          pacmanCurrentIndex = 239
         }
         break
       case 38:
         if (
-          pacmanCurrentIndex - width >= 0 &&
           !squares[pacmanCurrentIndex - width].classList.contains('wall') &&
           !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair')
         )
@@ -81,18 +79,16 @@ document.addEventListener('DOMContentLoaded', () => {
         break
       case 39:
         if (
-          pacmanCurrentIndex % width < width - 1 &&
           !squares[pacmanCurrentIndex + 1].classList.contains('wall') &&
           !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair')
         )
           pacmanCurrentIndex += 1
-        if (squares[pacmanCurrentIndex + 1] === squares[392]) {
-          pacmanCurrentIndex = 364
+        if (squares[pacmanCurrentIndex + 1] === squares[240]) {
+          pacmanCurrentIndex = 220
         }
         break
       case 40:
         if (
-          pacmanCurrentIndex + width < width * width &&
           !squares[pacmanCurrentIndex + width].classList.contains('wall') &&
           !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair')
         )
