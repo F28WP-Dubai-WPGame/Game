@@ -1,8 +1,14 @@
+body {
+  background: url('assets/background.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
+
 .grid {
   display: flex;
   flex-wrap: wrap;
-  width: 480px;
-  height: 560px;
+  margin: auto;
+  width: 400px;
+  height: 460px;
   border: solid black;
   background-color: black;
 }
