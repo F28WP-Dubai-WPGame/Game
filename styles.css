@@ -1,7 +1,7 @@
-/* body {
-  background: url('assets/background.jpg') no-repeat center center fixed;
+body {
+  background: url('assets/pacman.png') no-repeat center center fixed;
   background-size: cover;
-} */
+}
 
 .grid {
   display: flex;
@@ -23,11 +23,12 @@
   border: 8px solid black;
   box-sizing: border-box;
   border-radius: 100%;
+  z-index: 1000;
 }
 
 .wall {
   background-color: black;
-  outline:1px solid red;
+  outline:1px solid blue;
 }
 
 .power-pellet {
