@@ -1,7 +1,7 @@
-body {
+/* body {
   background: url('assets/background.jpg') no-repeat center center fixed;
   background-size: cover;
-}
+} */
 
 .grid {
   display: flex;
@@ -26,7 +26,8 @@ body {
 }
 
 .wall {
-  background-color: blue;
+  background-color: black;
+  outline:1px solid red;
 }
 
 .power-pellet {
