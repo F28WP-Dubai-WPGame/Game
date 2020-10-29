@@ -39,10 +39,10 @@ document.addEventListener('DOMContentLoaded', () => {
       squares.push(square)
 
       //add layout to the board
-      if (layout[i] === 1) {
-        squares[i].classList.add('wall')
-      } else if (layout[i] === 2) {
+      if (layout[i] === 2) {
         squares[i].classList.add('pac-dot')
+      } else if (layout[i] === 1) {
+        squares[i].classList.add('wall')
       } else if (layout[i] === 9) {
         squares[i].classList.add('ghost-lair')
       } else if (layout[i] === 7) {

@@ -1,7 +1,7 @@
-body {
-  background: url('assets/pacman.png') no-repeat center center fixed;
+/* body {
+  background: url('assets/background.jpg') no-repeat center center fixed;
   background-size: cover;
-}
+} */
 
 .grid {
   display: flex;
@@ -28,7 +28,7 @@ body {
 .wall {
   background-color: black;
   outline:1px solid blue;
-  z-index: 1000;
+  z-index: 999;
 }
 
 .power-pellet {
