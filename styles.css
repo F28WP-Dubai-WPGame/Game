@@ -27,8 +27,7 @@
 
 .wall {
   background-color: black;
-  outline:1px solid blue;
-  z-index: 999;
+  outline:1px solid red;
 }
 
 .power-pellet {
