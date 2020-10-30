@@ -55,10 +55,13 @@ document.addEventListener('DOMContentLoaded', () => {
   createBoard()
 
   let pacmanCurrentIndex = 288
-  squares[pacmanCurrentIndex].classList.add('pacman')
+  squares[pacmanCurrentIndex].classList.add('pacmanleft')
 
   function movePacman(e) {
-    squares[pacmanCurrentIndex].classList.remove('pacman')
+    squares[pacmanCurrentIndex].classList.remove('pacmanleft')
+    squares[pacmanCurrentIndex].classList.remove('pacmanup')
+    squares[pacmanCurrentIndex].classList.remove('pacmanright')
+    squares[pacmanCurrentIndex].classList.remove('pacmandown')
     switch (e.keyCode) {
       case 37:
         if (
@@ -69,6 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (squares[pacmanCurrentIndex - 1] === squares[219]) {
           pacmanCurrentIndex = 239
         }
+        squares[pacmanCurrentIndex].classList.add('pacmanleft')
         break
       case 38:
         if (
@@ -76,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
           !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair')
         )
           pacmanCurrentIndex -= width
+          squares[pacmanCurrentIndex].classList.add('pacmanup')
         break
       case 39:
         if (
@@ -86,6 +91,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (squares[pacmanCurrentIndex + 1] === squares[240]) {
           pacmanCurrentIndex = 220
         }
+        squares[pacmanCurrentIndex].classList.add('pacmanright')
         break
       case 40:
         if (
@@ -93,10 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
           !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair')
         )
           pacmanCurrentIndex += width
+          squares[pacmanCurrentIndex].classList.add('pacmandown')
         break
     }
 
-    squares[pacmanCurrentIndex].classList.add('pacman')
+    
     pacDotEaten()
     powerPelletEaten()
     checkForGameOver()

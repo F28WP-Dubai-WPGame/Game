@@ -38,34 +38,42 @@ body {
   border-radius: 100%;
 }
 
-.pacman {
+.pacmanleft {
   background: yellow;
   border: none;
   border-radius: 50%;
   z-index: 100;
-  clip-path: polygon(
-    0 0,
-    20px 0,
-    20px -5px,
-    8px 10px,
-    20px 25px,
-    20px 20px,
-    0 20px
-  );
+  clip-path: polygon(50% 0%, 100% 0, 100% 60%, 100% 100%, 0 99%, 73% 53%, 0 0);
+  animation: chew 0.2s linear forwards infinite;
+}
+.pacmanup {
+  background: yellow;
+  border: none;
+  border-radius: 50%;
+  z-index: 100;
+  clip-path: polygon(55% 83%, 100% 0, 100% 60%, 100% 100%, 0 99%, 0 60%, 0 0);
+  animation: chew 0.2s linear forwards infinite;
+}
+.pacmanright {
+  background: yellow;
+  border: none;
+  border-radius: 50%;
+  z-index: 100;
+  clip-path: polygon(49% 0, 100% 0, 21% 52%, 100% 100%, 48% 100%, 0 100%, 0 0);
+  animation: chew 0.2s linear forwards infinite;
+}
+.pacmandown {
+  background: yellow;
+  border: none;
+  border-radius: 50%;
+  z-index: 100;
+  clip-path: polygon(49% 0, 100% 0, 100% 30%, 100% 100%, 51% 27%, 0 100%, 0 0);
   animation: chew 0.2s linear forwards infinite;
 }
 
 @keyframes chew {
   50% {
-    clip-path: polygon(
-      0 0,
-      20px 0,
-      20px 10px,
-      8px 10px,
-      20px 10px,
-      20px 20px,
-      0 20px
-    );
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 78%, 0 50%, 0 23%);
   }
 }
 
