@@ -58,14 +58,16 @@ document.addEventListener('DOMContentLoaded', () => {
   squares[pacmanCurrentIndex].classList.add('pacman')
 
   function movePacman(e) {
-    squares[pacmanCurrentIndex].classList.remove('pacman')
+    squares[pacmanCurrentIndex].classList.remove('pacman', 'pacman-left', 'pacman-up', 'pacman-down')
     switch (e.keyCode) {
       case 37:
         if (
           !squares[pacmanCurrentIndex - 1].classList.contains('wall') &&
           !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair')
-        )
+        ) {
           pacmanCurrentIndex -= 1
+          squares[pacmanCurrentIndex].classList.add('pacman-left')
+        }
         if (squares[pacmanCurrentIndex - 1] === squares[219]) {
           pacmanCurrentIndex = 239
         }
@@ -74,15 +76,18 @@ document.addEventListener('DOMContentLoaded', () => {
         if (
           !squares[pacmanCurrentIndex - width].classList.contains('wall') &&
           !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair')
-        )
+        ) {
           pacmanCurrentIndex -= width
+          squares[pacmanCurrentIndex].classList.add('pacman-up')
+        }
         break
       case 39:
         if (
           !squares[pacmanCurrentIndex + 1].classList.contains('wall') &&
           !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair')
-        )
+        ) {
           pacmanCurrentIndex += 1
+        }
         if (squares[pacmanCurrentIndex + 1] === squares[240]) {
           pacmanCurrentIndex = 220
         }
@@ -91,8 +96,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (
           !squares[pacmanCurrentIndex + width].classList.contains('wall') &&
           !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair')
-        )
+        ) {
           pacmanCurrentIndex += width
+          squares[pacmanCurrentIndex].classList.add('pacman-down')
+        }
         break
     }
 
