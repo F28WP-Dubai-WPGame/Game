@@ -67,6 +67,10 @@ body {
   transform: rotate(270deg);
 }
 
+.pacman-right {
+  transform: rotate(360deg);
+}
+
 @keyframes chew {
   50% {
     clip-path: polygon(
