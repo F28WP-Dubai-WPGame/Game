@@ -60,7 +60,7 @@ body {
   border-radius: 50%;
   z-index: 100;
   clip-path: polygon(49% 0, 100% 0, 21% 52%, 100% 100%, 48% 100%, 0 100%, 0 0);
-  animation: chew 0.2s linear forwards infinite;
+  animation: chewright 0.2s linear forwards infinite;
 }
 .pacmandown {
   background: yellow;
@@ -74,6 +74,11 @@ body {
 @keyframes chew {
   50% {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 0 78%, 0 50%, 0 23%);
+  }
+}
+@keyframes chewright {
+  50% {
+    clip-path: polygon(100% 0, 100% 50%, 21% 52%, 100% 50%, 100% 100%, 0 100%, 0 0);
   }
 }
 
