@@ -155,9 +155,12 @@ document.addEventListener('DOMContentLoaded', () => {
     squares[ghost.currentIndex].classList.add('ghost')
   })
 
+<<<<<<< HEAD
   function getCoordinates(index){
     return [index % width, Math.floor(index / width)]
   }
+=======
+>>>>>>> 24a23db985980de659a77d6b65015455d08965c2
   ghosts.forEach(ghost => moveGhost(ghost))
 
   function moveGhost(ghost) {
@@ -171,6 +174,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //remove the ghosts classes
         squares[ghost.currentIndex].classList.remove(ghost.className)
         squares[ghost.currentIndex].classList.remove('ghost', 'scared')
+<<<<<<< HEAD
 
         const [ghostX,ghostY]=getCoordinates(ghost.currentIndex)
         const [ghostNewX,ghostNewY]=getCoordinates(ghost.currentIndex + direction)
@@ -202,6 +206,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
 
+=======
+        //move into that space
+        ghost.currentIndex += direction
+>>>>>>> 24a23db985980de659a77d6b65015455d08965c2
         squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
         //else find a new random direction ot go in
       } else direction = directions[Math.floor(Math.random() * directions.length)]

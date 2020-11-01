@@ -1,20 +1,13 @@
-var character= document.getElementById("character1");
-var block= document.getElementById("block");
+const express = require("express");
+const bodyParser = require("body-parser");
 
-function jump(){
-    if(character.classList != "animate"){
-        character.classList.add("animate");
-    }
-    setTimeout(function(){
-        character.classList.remove("animate");
-    },500);
-}
-var check= setInterval(function(){
-    var characterTop= parseInt(window.getComputedStyle(character).getPropertyValue("top"));
-    var blockLeft= parseInt(window.getComputedStyle(block).getPropertyValue("left"));
-    if((blockLeft<50 && blockLeft>-40) && characterTop>=250){
-        block.style.animation="none";
-        block.style.display="none";
-        alert("u lose");
-    }
-},10);
+const app = express();
+app.use(express.static("public"));
+
+app.get("/", function (req, res) {
+  res.sendFile(__dirname + "/index.html");
+});
+
+app.listen(3000, function () {
+  console.log("Server is running on port 3000");
+});
