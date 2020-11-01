@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
   squares[pacmanCurrentIndex].classList.add('pacman')
 
   function movePacman(e) {
-    squares[pacmanCurrentIndex].classList.remove('pacman', 'pacman-left', 'pacman-up', 'pacman-down')
+    squares[pacmanCurrentIndex].classList.remove('pacman', 'pacman-left', 'pacman-up', 'pacman-down', 'pacman-right')
     switch (e.keyCode) {
       case 37:
         if (
@@ -194,6 +194,7 @@ document.addEventListener('DOMContentLoaded', () => {
   function checkForGameOver() {
     if (squares[pacmanCurrentIndex].classList.contains('ghost') &&
       !squares[pacmanCurrentIndex].classList.contains('scared')) {
+      squares[pacmanCurrentIndex].classList.remove('pacman', 'pacman-left', 'pacman-up', 'pacman-down', 'pacman-right')
       ghosts.forEach(ghost => clearInterval(ghost.timerId))
       document.removeEventListener('keyup', movePacman)
       setTimeout(function () { alert("Game Over"); }, 500)
