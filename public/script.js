@@ -155,9 +155,6 @@ document.addEventListener('DOMContentLoaded', () => {
     squares[ghost.currentIndex].classList.add('ghost')
   })
 
-  function getCoordinates(index){
-    return [index % width, Math.floor(index / width)]
-  }
   ghosts.forEach(ghost => moveGhost(ghost))
 
   function moveGhost(ghost) {
@@ -171,35 +168,8 @@ document.addEventListener('DOMContentLoaded', () => {
         //remove the ghosts classes
         squares[ghost.currentIndex].classList.remove(ghost.className)
         squares[ghost.currentIndex].classList.remove('ghost', 'scared')
-
-        const [ghostX,ghostY]=getCoordinates(ghost.currentIndex)
-        const [ghostNewX,ghostNewY]=getCoordinates(ghost.currentIndex + direction)
-        const [pacmanX,pacmanY]=getCoordinates(pacmanCurrentIndex)
-
-        function isXCoordCloser(){
-          if((ghostNewX - pacmanX) > (ghostX - pacmanX)){
-            return true
-          }
-          else{
-            return false
-          }
-        }
-        function isYCoordCloser(){
-          if((ghostNewY - pacmanY) > (ghostY - pacmanY)){
-            return true
-          }
-          else{
-            return false
-          }
-        }
-        if(isXCoordCloser() || isYCoordCloser()){
-          ghost.currentIndex += direction
-          squares[ghost.currentIndex].classList.add(ghost.className,'ghost')
-        }
-        else{
-          squares[ghost.currentIndex].classList.add(ghost.className,'ghost')
-          direction = directions[Math.floor(Math.random() * directions.length)]
-        }
+        //move into that space
+        ghost.currentIndex += direction
         squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
         //else find a new random direction ot go in
       } else direction = directions[Math.floor(Math.random() * directions.length)]
