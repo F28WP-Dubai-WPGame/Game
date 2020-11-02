@@ -1,7 +1,7 @@
 {
-  "name": "server",
+  "name": "pacman_rush",
   "version": "1.0.0",
-  "description": "",
+  "description": "A replica of the worldwide famous game - PacMan",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -13,7 +13,7 @@
     "Game",
     "Socket.IO"
   ],
-  "author": "Juriy Bura <juriy.bura@gmail.com>",
+  "author": "Abdullah Meda",
   "license": "ISC",
   "dependencies": {
     "express": "^4.17.1",
