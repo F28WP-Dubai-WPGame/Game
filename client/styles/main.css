@@ -77,7 +77,7 @@ canvas {
 }
 
 #events {
-  height: 150px;
+  height: 400px;
 }
 
 .grid {
@@ -212,4 +212,11 @@ canvas {
 
 .clyde {
   background: orange;
+}
+
+.rules {
+  height: 460px;
+  width: 400px;
+  border: 1px solid black;
+  text-align: center;
 }

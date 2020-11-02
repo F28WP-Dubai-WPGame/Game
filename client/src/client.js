@@ -19,7 +19,7 @@ const onChatSubmitted = (sock) => (e) => {
 
 (() => {
 
-  const scoreDisplay = document.getElementById('score')
+  // const scoreDisplay = document.getElementById('score')
   const width = 20
   let score = 0
   const grid = document.querySelector('.grid')
@@ -132,7 +132,7 @@ const onChatSubmitted = (sock) => (e) => {
   function pacDotEaten() {
     if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
       score++
-      scoreDisplay.innerHTML = score
+      // scoreDisplay.innerHTML = score
       squares[pacmanCurrentIndex].classList.remove('pac-dot')
     }
   }
