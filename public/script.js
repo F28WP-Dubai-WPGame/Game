@@ -129,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     checkForGameOver()
     checkForWin()
   }
-  document.addEventListener('keyup', movePacman)
+  document.addEventListener('keydown', movePacman)
 
   function pacDotEaten() {
     if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
