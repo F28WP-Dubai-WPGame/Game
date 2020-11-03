@@ -54,8 +54,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   createBoard()
 
-  let pacmanCurrentIndex = 288
-  squares[pacmanCurrentIndex].classList.add('pacman')
+  /*let pacmanCurrentIndex = 288
+  squares[pacmanCurrentIndex].classList.add('pacman')*/
+
+  class Pacmans {
+    constructor(className1, startIndex1) {
+      this.className1 = className1
+      this.startIndex1 = startIndex1
+      this.currentIndex1 = startIndex1
+    }
+  }
+
+  pacmen = [
+    new Pacmans('pacman1', 288),
+    new Pacmans('pacman2', 290)
+  ]
+
+  pacmen.forEach(pacman => {
+    squares[pacman.currentIndex1].classList.add(pacman.className1)
+    squares[pacman.currentIndex1].classList.add('pacman')
+  })
+
+  /*pacmen.forEach(pacman => movePacman(e))*/
 
   function movePacman(e) {
     squares[pacmanCurrentIndex].classList.remove('pacman', 'pacman-left', 'pacman-up', 'pacman-down', 'pacman-right')
