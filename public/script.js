@@ -72,13 +72,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   pacmen.forEach(pacman => {
     squares[pacman.currentIndex1].classList.add(pacman.className1)
+    pacmanCurrentIndex=pacman.currentIndex1
     squares[pacman.currentIndex1].classList.add('pacman')
   })
 
   /*pacmen.forEach(pacman => movePacman(e))*/
-
   function movePacman(e) {
-    squares[pacmanCurrentIndex].classList.remove('pacman', 'pacman-left', 'pacman-up', 'pacman-down', 'pacman-right')
+    squares[pacmanCurrentIndex].classList.remove('pacman', 'pacman-left', 'pacman-up', 'pacman-down', 'pacman-right','pacman2')
     switch (e.keyCode) {
       case 37:
         if (
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
           !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair')
         ) {
           pacmanCurrentIndex -= width
-          squares[pacmanCurrentIndex].classList.add('pacman-up')
+          squares[pacmanCurrentIndex].classList.add('pacman2','pacman','pacman-up')
         }
         break
       case 39:
@@ -118,12 +118,12 @@ document.addEventListener('DOMContentLoaded', () => {
           !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair')
         ) {
           pacmanCurrentIndex += width
-          squares[pacmanCurrentIndex].classList.add('pacman-down')
+          squares[pacmanCurrentIndex].classList.add('pacman2','pacman','pacman-down')
         }
         break
     }
 
-    squares[pacmanCurrentIndex].classList.add('pacman')
+    squares[pacmanCurrentIndex].classList.add('pacman2','pacman')
     pacDotEaten()
     powerPelletEaten()
     checkForGameOver()
