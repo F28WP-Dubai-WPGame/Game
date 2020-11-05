@@ -39,7 +39,6 @@ body {
 }
 
 .pacman {
-  background: yellow;
   border: none;
   border-radius: 50%;
   z-index: 100;
@@ -53,6 +52,12 @@ body {
     0 20px
   );
   animation: chew 0.2s linear forwards infinite;
+}
+.pacman1 {
+  background: yellow;
+}
+.pacman2 {
+  background: green;
 }
 
 .pacman-down {

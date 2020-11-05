@@ -54,11 +54,31 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   createBoard()
 
-  let pacmanCurrentIndex = 288
-  squares[pacmanCurrentIndex].classList.add('pacman')
+  let pacmanCurrentIndex
 
+  class Pacmans {
+    constructor(className1, startIndex1) {
+      this.className1 = className1
+      this.startIndex1 = startIndex1
+      this.currentIndex1 = startIndex1
+    }
+  }
+
+  pacmen = [
+    new Pacmans('pacman1', 288),
+    new Pacmans('pacman2', 290)
+  ]
+
+  pacmen.forEach(pacman => {
+    squares[pacman.currentIndex1].classList.add(pacman.className1)
+    pacmanCurrentIndex=pacman.currentIndex1
+    squares[pacman.currentIndex1].classList.add('pacman')
+    document.addEventListener('keydown', movePacman)
+  })
+
+  /*pacmen.forEach(pacman => movePacman(e))*/
   function movePacman(e) {
-    squares[pacmanCurrentIndex].classList.remove('pacman', 'pacman-left', 'pacman-up', 'pacman-down', 'pacman-right')
+    squares[pacmanCurrentIndex].classList.remove('pacman', 'pacman-left', 'pacman-up', 'pacman-down', 'pacman-right',pacmen[1].className1)
     switch (e.keyCode) {
       case 37:
         if (
@@ -78,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
           !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair')
         ) {
           pacmanCurrentIndex -= width
-          squares[pacmanCurrentIndex].classList.add('pacman-up')
+          squares[pacmanCurrentIndex].classList.add(pacmen[1].className1,'pacman','pacman-up')
         }
         break
       case 39:
@@ -98,18 +118,18 @@ document.addEventListener('DOMContentLoaded', () => {
           !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair')
         ) {
           pacmanCurrentIndex += width
-          squares[pacmanCurrentIndex].classList.add('pacman-down')
+          squares[pacmanCurrentIndex].classList.add(pacmen[1].className1,'pacman','pacman-down')
         }
         break
     }
 
-    squares[pacmanCurrentIndex].classList.add('pacman')
+    squares[pacmanCurrentIndex].classList.add(pacmen[1].className1,'pacman')
     pacDotEaten()
     powerPelletEaten()
     checkForGameOver()
     checkForWin()
   }
-  document.addEventListener('keyup', movePacman)
+  /*document.addEventListener('keydown', movePacman)*/
 
   function pacDotEaten() {
     if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
