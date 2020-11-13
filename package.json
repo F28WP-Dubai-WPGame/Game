@@ -1,24 +1,30 @@
 {
-  "name": "geometry-dash",
+  "name": "pacman-rush",
   "version": "1.0.0",
-  "description": "Recreating RobTop's Worldwide game famously known as Geometry Dash",
-  "main": "app.js",
+  "description": "A replica of the worldwide famous game - PacMan",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/F28WP-Dubai-WPGame/Geometry-Dash.git"
+    "url": "git+https://github.com/F28WP-Dubai-WPGame/PacMan_Rush.git"
   },
+  "keywords": [
+    "Pacman",
+    "Multiplayer"
+  ],
   "author": "Abdullah Meda",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/F28WP-Dubai-WPGame/Geometry-Dash/issues"
+    "url": "https://github.com/F28WP-Dubai-WPGame/PacMan_Rush/issues"
   },
-  "homepage": "https://github.com/F28WP-Dubai-WPGame/Geometry-Dash#readme",
+  "homepage": "https://github.com/F28WP-Dubai-WPGame/PacMan_Rush#readme",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "ejs": "^3.1.5",
-    "express": "^4.17.1"
+    "express": "^4.17.1",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }
