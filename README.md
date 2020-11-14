@@ -19,5 +19,5 @@ Our version of PacMan will be a multiplayer game that allows there to be a minim
 -   Run `node app.js`
 -   Open `localhost:3000` on a browser
 
-## **Overview**
+## **Multiplayer**
 The game is current in the process of being turned into a multiplayer game!
