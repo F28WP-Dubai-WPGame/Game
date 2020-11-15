@@ -40,6 +40,8 @@ function Player(id, startIndex) {
 }
 
 
+
+
 io.sockets.on('connection', function (socket) {
 
   socket.id = Math.random();
