@@ -104,11 +104,15 @@ ghosts.forEach(ghost => {
 
 socket.on('newPositions', function (data) {
   for (var i = 0; i < data.length; i++) {
+    for (let i = 0; i < layout.length; i++) {
+      if (squares[i].classList.contains('pacman')) {
+        squares[i].classList.remove('pacman')
+      }
+    }
     squares[data[i].currentIndex].classList.add('pacman')
     pacmanCurrentIndex = data[i].currentIndex;
   }
 });
-
 document.onkeydown = function (event) {
   squares[pacmanCurrentIndex].classList.remove('pacman')
 
