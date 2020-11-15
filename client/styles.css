@@ -18,7 +18,7 @@ body,html {
   display: flex;
   flex-wrap: wrap;
   margin: auto auto;
-  width: 400px;
+  width: 740px;
   height: 460px;
   border: solid black;
   background-color: black;
@@ -49,6 +49,10 @@ body,html {
   background-color: #0000cc;
   outline:1px solid #0000cc;
   z-index: 10;
+}
+
+.blank {
+  background: black;
 }
 
 .power-pellet {
