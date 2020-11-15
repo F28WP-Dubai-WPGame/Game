@@ -1,12 +1,23 @@
-body {
-  background: url('pacman.PNG') no-repeat center center fixed;
+body,html {
+  /* background: url(pacman.PNG) no-repeat center center fixed;  */
+  background-color: white;
   background-size: cover;
+}
+
+.game {
+  width: 90%;
+  margin: 0 auto;
+  margin: auto auto;
+  position: absolute;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
 }
 
 .grid {
   display: flex;
   flex-wrap: wrap;
-  margin: auto;
+  margin: auto auto;
   width: 400px;
   height: 460px;
   border: solid black;
@@ -18,6 +29,15 @@ body {
   height: 20px;
 }
 
+.score {
+  height: 80px;
+  width: 400px;
+  margin: auto auto;
+  margin-top: 25px;
+  border: solid #0000cc;
+}
+/* 702536 */
+
 .pac-dot {
   background-color: white;   
   border: 8px solid black;
@@ -26,8 +46,8 @@ body {
 }
 
 .wall {
-  background-color: black;
-  outline:1px solid blue;
+  background-color: #0000cc;
+  outline:1px solid #0000cc;
   z-index: 10;
 }
 
@@ -39,6 +59,7 @@ body {
 }
 
 .pacman {
+  background-color: yellow;
   border: none;
   border-radius: 50%;
   z-index: 10000000000;

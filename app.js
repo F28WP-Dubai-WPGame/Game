@@ -64,6 +64,13 @@ io.sockets.on('connection', function (socket) {
       player.pressingDown = data.state;
   });
 
+  socket.on('sendMsgToServer', function (data) {
+    var playerName = ("" + socket.id).slice(2, 7);
+    for (var i in SOCKET_LIST) {
+      SOCKET_LIST[i].emit('addToChat', playerName + ': ' + data);
+    }
+  });
+
 });
 
 setInterval(function () {
