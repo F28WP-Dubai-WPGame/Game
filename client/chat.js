@@ -12,9 +12,6 @@ socket.on('addToChat', function (data) {
 
 chatForm.onsubmit = function (e) {
   e.preventDefault();
-  if (chatInput.value[0] === '/')
-    socket.emit('evalServer', chatInput.value.slice(1));
-  else
-    socket.emit('sendMsgToServer', chatInput.value);
+  socket.emit('sendMsgToServer', chatInput.value);
   chatInput.value = '';
 }

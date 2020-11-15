@@ -47,7 +47,7 @@ io.sockets.on('connection', function (socket) {
   socket.id = Math.random();
   SOCKET_LIST[socket.id] = socket;
 
-  var player = Player(socket.id, 288);
+  var player = Player(socket.id, 426);
   PLAYER_LIST[socket.id] = player;
 
   socket.on('disconnect', function () {
@@ -91,4 +91,4 @@ setInterval(function () {
     socket.emit('newPositions', pack)
   }
 
-}, 1000 / 10)
+}, 1000 / 20)
