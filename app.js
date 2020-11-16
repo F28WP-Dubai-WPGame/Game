@@ -39,10 +39,33 @@ function Player(id, startIndex) {
   return self;
 }
 
+class Ghost {
+  constructor(className, startIndex, speed) {
+    this.className = className
+    this.startIndex = startIndex
+    this.speed = speed
+    this.currentIndex = startIndex
+    this.isScared = false
+    this.timerId = NaN
+  }
+}
 
+ghosts = [
+  new Ghost('blinky', 378, 250),
+  new Ghost('pinky', 380, 250),
+  new Ghost('inky', 452, 250),
+  new Ghost('clyde', 454, 250),
+  new Ghost('blinky2', 470, 250),
+  new Ghost('pinky2', 472, 250),
+  new Ghost('inky2', 396, 250),
+  new Ghost('clyde2', 398, 250)
+]
 
 
 io.sockets.on('connection', function (socket) {
+  socket.emit('classghost',ghosts)
+  ghosts.forEach(ghost => socket.emit('moveGhost', ghost))
+  
 
   socket.id = Math.random();
   SOCKET_LIST[socket.id] = socket;
