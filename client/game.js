@@ -98,9 +98,9 @@ socket.on('moveGhost', function (ghosts){
 
 socket.on('newPositions', function (data) {
   for (var i = 0; i < data.length; i++) {
-    for (let i = 0; i < layout.length; i++) {
-      if (squares[i].classList.contains('pacman')) {
-        squares[i].classList.remove('pacman')
+    for (let j = 0; j < layout.length; j++) {
+      if (squares[j].classList.contains('pacman')) {
+        squares[j].classList.remove('pacman')
       }
     }
     squares[data[i].currentIndex].classList.add('pacman')
@@ -119,9 +119,6 @@ document.onkeydown = function (event) {
       socket.emit('keyPress', { inputId: 'up', state: false });
       socket.emit('keyPress', { inputId: 'down', state: false });
       socket.emit('keyPress', { inputId: 'left', state: true });
-      if (squares[pacmanCurrentIndex - 1] === squares[406]) {
-        pacmanCurrentIndex = 443
-      }
     }
     else{
       socket.emit('keyPress', { inputId: 'left', state: false });
