@@ -32,9 +32,9 @@ function Player(id, startIndex) {
     if (self.pressingLeft)
       self.currentIndex -= 1;
     if (self.pressingUp)
-      self.currentIndex -= self.width;
+      self.currentIndex -= 37;
     if (self.pressingDown)
-      self.currentIndex += self.width;
+      self.currentIndex += 37;
   }
   return self;
 }
@@ -47,7 +47,7 @@ io.sockets.on('connection', function (socket) {
   socket.id = Math.random();
   SOCKET_LIST[socket.id] = socket;
 
-  var player = Player(socket.id, 426);
+  var player = Player(socket.id, 429);
   PLAYER_LIST[socket.id] = player;
 
   socket.on('disconnect', function () {
@@ -85,10 +85,8 @@ setInterval(function () {
       currentIndex: player.currentIndex
     })
   }
-
   for (var i in SOCKET_LIST) {
     var socket = SOCKET_LIST[i];
     socket.emit('newPositions', pack)
   }
-
 }, 1000 / 20)

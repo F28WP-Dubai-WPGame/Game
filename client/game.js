@@ -100,40 +100,76 @@ ghosts.forEach(ghost => {
 
 socket.on('newPositions', function (data) {
   for (var i = 0; i < data.length; i++) {
+    for (let i = 0; i < layout.length; i++) {
+      if (squares[i].classList.contains('pacman')) {
+        squares[i].classList.remove('pacman')
+      }
+    }
     squares[data[i].currentIndex].classList.add('pacman')
     pacmanCurrentIndex = data[i].currentIndex;
   }
 });
 
 document.onkeydown = function (event) {
-  // squares[pacmanCurrentIndex].classList.remove('pacman')
+   squares[pacmanCurrentIndex].classList.remove('pacman')
 
   //left
-  if (event.keyCode === 37)
-    // && !squares[pacmanCurrentIndex - 1].classList.contains('wall')
-    // && !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair'))
-
-    socket.emit('keyPress', { inputId: 'left', state: true });
+  if (event.keyCode === 37){
+    if(!squares[pacmanCurrentIndex - 1].classList.contains('wall')
+     && !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair')){
+      socket.emit('keyPress', { inputId: 'right', state: false });
+      socket.emit('keyPress', { inputId: 'up', state: false });
+      socket.emit('keyPress', { inputId: 'down', state: false });
+      socket.emit('keyPress', { inputId: 'left', state: true });
+    }
+    else{
+      socket.emit('keyPress', { inputId: 'left', state: false });
+    }
+  }
   //up
-  else if (event.keyCode === 38)
-    // && !squares[pacmanCurrentIndex - width].classList.contains('wall')
-    // && !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair'))
+  else if (event.keyCode === 38){
+    if(!squares[pacmanCurrentIndex - width].classList.contains('wall') && !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair')){
+      socket.emit('keyPress', { inputId: 'right', state: false });
+      socket.emit('keyPress', { inputId: 'left', state: false });
+      socket.emit('keyPress', { inputId: 'down', state: false });
+      socket.emit('keyPress', { inputId: 'up', state: true });
+    }
+    else{
+      socket.emit('keyPress', { inputId: 'up', state: false });
+    }
+  }
 
-    socket.emit('keyPress', { inputId: 'up', state: true });
+    
   //right
-  else if (event.keyCode === 39)
-    // && !squares[pacmanCurrentIndex + 1].classList.contains('wall')
-    // && !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair'))
+  else if (event.keyCode === 39){
+    if(!squares[pacmanCurrentIndex + 1].classList.contains('wall') && !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair')){
+      socket.emit('keyPress', { inputId: 'up', state: false });
+      socket.emit('keyPress', { inputId: 'left', state: false });
+      socket.emit('keyPress', { inputId: 'down', state: false });
+      socket.emit('keyPress', { inputId: 'right', state: true });
+    }
+    else{
+      socket.emit('keyPress', { inputId: 'right', state: false });
+    }
 
-    socket.emit('keyPress', { inputId: 'right', state: true });
+  }
   //down
-  else if (event.keyCode === 40)
-    // && !squares[pacmanCurrentIndex + width].classList.contains('wall')
-    // && !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair'))
+  else if (event.keyCode === 40){
+    if(!squares[pacmanCurrentIndex + width].classList.contains('wall') && !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair')){
+      socket.emit('keyPress', { inputId: 'up', state: false });
+      socket.emit('keyPress', { inputId: 'left', state: false });
+      socket.emit('keyPress', { inputId: 'right', state: false });
+      socket.emit('keyPress', { inputId: 'down', state: true });
+    }
+    else{
+      socket.emit('keyPress', { inputId: 'down', state: false });
+    }
+  }
 
-    socket.emit('keyPress', { inputId: 'down', state: true });
 
-}
+    
+
+}/*
 document.onkeyup = function (event) {
   //left
   if (event.keyCode === 37)
@@ -148,4 +184,4 @@ document.onkeyup = function (event) {
   else if (event.keyCode === 40)
     socket.emit('keyPress', { inputId: 'down', state: false });
 
-}
+}*/
