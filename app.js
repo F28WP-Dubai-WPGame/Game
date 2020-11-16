@@ -114,4 +114,4 @@ setInterval(function () {
     var socket = SOCKET_LIST[i];
     socket.emit('newPositions', pack)
   }
-}, 1000 / 20)
+}, 1000 / 5)

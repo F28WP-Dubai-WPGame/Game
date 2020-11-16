@@ -119,6 +119,9 @@ document.onkeydown = function (event) {
       socket.emit('keyPress', { inputId: 'up', state: false });
       socket.emit('keyPress', { inputId: 'down', state: false });
       socket.emit('keyPress', { inputId: 'left', state: true });
+      if (squares[pacmanCurrentIndex - 1] === squares[406]) {
+        pacmanCurrentIndex = 443
+      }
     }
     else{
       socket.emit('keyPress', { inputId: 'left', state: false });
@@ -145,6 +148,9 @@ document.onkeydown = function (event) {
       socket.emit('keyPress', { inputId: 'left', state: false });
       socket.emit('keyPress', { inputId: 'down', state: false });
       socket.emit('keyPress', { inputId: 'right', state: true });
+      if (squares[pacmanCurrentIndex - 1] === squares[443]) {
+        pacmanCurrentIndex = 406
+      }
     }
     else{
       socket.emit('keyPress', { inputId: 'right', state: false });
