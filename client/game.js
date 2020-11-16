@@ -1,6 +1,6 @@
 var socket = io.connect('http://localhost:3000/')
 let pacmanCurrentIndex;
-const width = 20;
+const width = 37;
 const grid = document.querySelector('.grid')
 const layout = [
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,

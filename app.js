@@ -24,7 +24,7 @@ function Player(id, startIndex) {
     pressingLeft: false,
     pressingUp: false,
     pressingDown: false,
-    width: 20,
+    width: 37,
   }
   self.updatePosition = function () {
     if (self.pressingRight)
@@ -32,9 +32,9 @@ function Player(id, startIndex) {
     if (self.pressingLeft)
       self.currentIndex -= 1;
     if (self.pressingUp)
-      self.currentIndex -= 37;
+      self.currentIndex -= self.width;
     if (self.pressingDown)
-      self.currentIndex += 37;
+      self.currentIndex += self.width;
   }
   return self;
 }
