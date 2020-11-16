@@ -63,8 +63,10 @@ ghosts = [
 
 
 io.sockets.on('connection', function (socket) {
-  socket.emit('classghost',ghosts)
-  ghosts.forEach(ghost => socket.emit('moveGhost', ghost))
+  
+  socket.emit('classghost',ghosts);
+  socket.emit('moveGhost', ghosts);
+  
   
 
   socket.id = Math.random();
