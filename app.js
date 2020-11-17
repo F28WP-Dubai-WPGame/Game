@@ -13,7 +13,7 @@ serv.listen(3000, function () {
 });
 
 var SOCKET_LIST = {};
-var PLAYER_LIST = {};
+
 
 function Player(id, startIndex) {
   var self = {
@@ -36,8 +36,41 @@ function Player(id, startIndex) {
     if (self.pressingDown)
       self.currentIndex += self.width;
   }
+  Player.list[id] = self;
   return self;
 }
+
+Player.list = {};
+Player.onConnect = function(socket){
+  var player = Player(socket.id, 429);
+	socket.on('keyPress',function(data){
+		if(data.inputId === 'left')
+			player.pressingLeft = data.state;
+		else if(data.inputId === 'right')
+			player.pressingRight = data.state;
+		else if(data.inputId === 'up')
+			player.pressingUp = data.state;
+		else if(data.inputId === 'down')
+			player.pressingDown = data.state;
+	});
+}
+Player.onDisconnect = function(socket){
+	delete Player.list[socket.id];
+}
+Player.update = function(){
+	var pack = [];
+	for(var i in Player.list){
+		var player = Player.list[i];
+		player.update();
+		pack.push({
+			x:player.x,
+			y:player.y,
+			number:player.number
+		});		
+	}
+	return pack;
+}
+
 
 class Ghost {
   constructor(className, startIndex, speed) {
@@ -72,24 +105,26 @@ io.sockets.on('connection', function (socket) {
   socket.id = Math.random();
   SOCKET_LIST[socket.id] = socket;
 
-  var player = Player(socket.id, 429);
-  PLAYER_LIST[socket.id] = player;
+  socket.on('signIn', function (data) {
+    if(data.username === 'bob' && data.password === '123'){
+      Player.onConnect(socket);
+      socket.emit('signInResponse',{success:true});
+    }
+    else{
+      socket.emit('signInResponse',{success:false});
+    }
+    
+  });
+
+
+ 
 
   socket.on('disconnect', function () {
     delete SOCKET_LIST[socket.id];
-    delete PLAYER_LIST[socket.id];
+    Player.onDisconnect(socket);
   });
 
-  socket.on('keyPress', function (data) {
-    if (data.inputId === 'left')
-      player.pressingLeft = data.state;
-    else if (data.inputId === 'right')
-      player.pressingRight = data.state;
-    else if (data.inputId === 'up')
-      player.pressingUp = data.state;
-    else if (data.inputId === 'down')
-      player.pressingDown = data.state;
-  });
+
 
   socket.on('sendMsgToServer', function (data) {
     var playerName = ("" + socket.id).slice(2, 7);
@@ -103,8 +138,8 @@ io.sockets.on('connection', function (socket) {
 setInterval(function () {
   var pack = [];
 
-  for (var i in PLAYER_LIST) {
-    var player = PLAYER_LIST[i];
+  for (var i in Player.list) {
+    var player = Player.list[i];
     player.updatePosition();
     pack.push({
       currentIndex: player.currentIndex

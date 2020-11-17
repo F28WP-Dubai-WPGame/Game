@@ -1,4 +1,21 @@
-var socket = io.connect('http://localhost:3000/')
+var socket = io();
+var signDiv = document.getElementById('signDiv');
+var signDivUsername = document.getElementById('signDiv-username');
+var signDivSignIn = document.getElementById('signDiv-signIn');
+var signDivSignUp = document.getElementById('signDiv-signUp');
+var signDivPassword = document.getElementById('signDiv-password');
+
+signDivSignIn.onclick = function(){
+  socket.emit('signIn',{username:signDivUsername.value,password:signDivPassword.value});
+}
+
+socket.on('signInResponse',function(data){
+  if(data.success){
+    signDiv.style.display = 'none';
+    gamestuff.style.display = 'inline-block';
+  } else
+    alert("Sign in unsuccessul.");
+});
 let pacmanCurrentIndex;
 const width = 37;
 const grid = document.querySelector('.grid')
