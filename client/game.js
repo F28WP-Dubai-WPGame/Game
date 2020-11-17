@@ -115,9 +115,6 @@ document.onkeydown = function (event) {
   if (event.keyCode === 37){
     if(!squares[pacmanCurrentIndex - 1].classList.contains('wall')
      && !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair')){
-      socket.emit('keyPress', { inputId: 'right', state: false });
-      socket.emit('keyPress', { inputId: 'up', state: false });
-      socket.emit('keyPress', { inputId: 'down', state: false });
       socket.emit('keyPress', { inputId: 'left', state: true });
     }
     else{
@@ -170,11 +167,12 @@ document.onkeydown = function (event) {
 
     
 
-}/*
+}
 document.onkeyup = function (event) {
   //left
-  if (event.keyCode === 37)
+  if (event.keyCode === 37){
     socket.emit('keyPress', { inputId: 'left', state: false });
+  }
   //up
   else if (event.keyCode === 38)
     socket.emit('keyPress', { inputId: 'up', state: false });
@@ -185,4 +183,4 @@ document.onkeyup = function (event) {
   else if (event.keyCode === 40)
     socket.emit('keyPress', { inputId: 'down', state: false });
 
-}*/
+}
