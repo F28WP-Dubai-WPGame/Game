@@ -4,6 +4,7 @@ var signDivUsername = document.getElementById('signDiv-username');
 var signDivSignIn = document.getElementById('signDiv-signIn');
 var signDivSignUp = document.getElementById('signDiv-signUp');
 var signDivPassword = document.getElementById('signDiv-password');
+var userndPass = document.getElementById('userndPass');
 
 signDivSignIn.onclick = function(){
   socket.emit('signIn',{username:signDivUsername.value,password:signDivPassword.value});
@@ -16,6 +17,7 @@ signDivSignUp.onclick = function(){
 socket.on('signInResponse',function(data){
   if(data.success){
     signDiv.style.display = 'none';
+    userndPass.style.display = 'none';
     gamestuff.style.display = 'inline-block';
   } else
     alert("Sign in unsuccessful.");
