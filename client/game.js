@@ -9,13 +9,25 @@ signDivSignIn.onclick = function(){
   socket.emit('signIn',{username:signDivUsername.value,password:signDivPassword.value});
 }
 
+signDivSignUp.onclick = function(){
+  socket.emit('signUp',{username:signDivUsername.value,password:signDivPassword.value});
+}
+
 socket.on('signInResponse',function(data){
   if(data.success){
     signDiv.style.display = 'none';
     gamestuff.style.display = 'inline-block';
   } else
-    alert("Sign in unsuccessul.");
+    alert("Sign in unsuccessful.");
 });
+
+socket.on('signUpResponse',function(data){
+  if(data.success){
+    alert("Sign up successful.");
+  } else
+    alert("Sign up unsuccessful.");
+});
+
 let pacmanCurrentIndex;
 const width = 37;
 const grid = document.querySelector('.grid')
