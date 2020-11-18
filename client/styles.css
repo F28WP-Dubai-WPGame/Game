@@ -176,3 +176,30 @@ body,html {
 .clyde2 {
   background: orange;
 }
+
+#signDiv-username {
+  width: 50px;
+  border: 5px solid rgba(42, 12, 212, 0.26);
+  height:35px;
+  width:200px;
+  margin: 20px;
+  background: rgba(255, 255, 255, 0.822);
+  margin-left: 695px;
+  margin-top:300px;
+}
+
+#signDiv-password {
+  width: 50px;
+  border: 5px solid rgb(42, 12, 212, 0.26);
+  height:35px;
+  width:200px;
+  margin: 20px;
+  background: rgba(255, 255, 255, 0.822);
+  margin-left: 700px;
+  margin-top:20px;
+}
+
+#userndPass {
+  margin-left: 700px;
+  margin-top:50px;
+}
