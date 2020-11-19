@@ -5,24 +5,24 @@ var signDivSignIn = document.getElementById('signDiv-signIn');
 var signDivSignUp = document.getElementById('signDiv-signUp');
 var signDivPassword = document.getElementById('signDiv-password');
 
-signDivSignIn.onclick = function(){
-  socket.emit('signIn',{username:signDivUsername.value,password:signDivPassword.value});
+signDivSignIn.onclick = function () {
+  socket.emit('signIn', { username: signDivUsername.value, password: signDivPassword.value });
 }
 
-signDivSignUp.onclick = function(){
-  socket.emit('signUp',{username:signDivUsername.value,password:signDivPassword.value});
+signDivSignUp.onclick = function () {
+  socket.emit('signUp', { username: signDivUsername.value, password: signDivPassword.value });
 }
 
-socket.on('signInResponse',function(data){
-  if(data.success){
+socket.on('signInResponse', function (data) {
+  if (data.success) {
     signDiv.style.display = 'none';
     gamestuff.style.display = 'inline-block';
   } else
     alert("Sign in unsuccessful.");
 });
 
-socket.on('signUpResponse',function(data){
-  if(data.success){
+socket.on('signUpResponse', function (data) {
+  if (data.success) {
     alert("Sign up successful.");
   } else
     alert("Sign up unsuccessful.");
@@ -79,33 +79,35 @@ function createBoard() {
 }
 createBoard();
 
-socket.on('classghost', function(ghosts){
-  ghosts.forEach(ghost => {
-    squares[ghost.currentIndex].classList.add(ghost.className)
-    squares[ghost.currentIndex].classList.add('ghost')
-  })
-});
+class Ghost {
+  constructor(className, startIndex, speed) {
+    this.className = className
+    this.startIndex = startIndex
+    this.speed = speed
+    this.currentIndex = startIndex
+    this.isScared = false
+    this.timerId = NaN
+  }
+}
 
-socket.on('moveGhost', function (ghosts){
-  ghosts.forEach(ghost => {
-    const directions = [-1, +1, width, -width]
-    let direction = directions[Math.floor(Math.random() * directions.length)]
-  
-    ghost.timerId = setInterval(function () {
-      //if the next squre your ghost is going to go to does not have a ghost and does not have a wall
-      if (!squares[ghost.currentIndex + direction].classList.contains('ghost') &&
-        !squares[ghost.currentIndex + direction].classList.contains('wall')) {
-        //remove the ghosts classes
-        squares[ghost.currentIndex].classList.remove(ghost.className)
-        squares[ghost.currentIndex].classList.remove('ghost', 'scared')
-        //move into that space
-        ghost.currentIndex += direction
-        squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
-        //else find a new random direction ot go in
-      } else direction = directions[Math.floor(Math.random() * directions.length)]
-     }, ghost.speed)
-  })
-});
+ghosts = [
+  new Ghost('blinky', 378, 250),
+  new Ghost('pinky', 380, 250),
+  new Ghost('inky', 452, 250),
+  new Ghost('clyde', 454, 250),
+  new Ghost('blinky2', 470, 250),
+  new Ghost('pinky2', 472, 250),
+  new Ghost('inky2', 396, 250),
+  new Ghost('clyde2', 398, 250)
+]
+
+ghosts.forEach(ghost => {
+  squares[ghost.currentIndex].classList.add(ghost.className)
+  squares[ghost.currentIndex].classList.add('ghost')
+})
+
+// ghosts.forEach(ghost => moveGhost(ghost))
+
 // function moveGhost(ghost) {
 //   const directions = [-1, +1, width, -width]
 //   let direction = directions[Math.floor(Math.random() * directions.length)]
@@ -138,70 +140,38 @@ socket.on('newPositions', function (data) {
 });
 
 document.onkeydown = function (event) {
-   squares[pacmanCurrentIndex].classList.remove('pacman')
+  // squares[pacmanCurrentIndex].classList.remove('pacman')
 
   //left
-  if (event.keyCode === 37){
-    if(!squares[pacmanCurrentIndex - 1].classList.contains('wall')
-     && !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair')){
-      socket.emit('keyPress', { inputId: 'left', state: true });
-    }
-    else{
-      socket.emit('keyPress', { inputId: 'left', state: false });
-    }
-  }
+  if (event.keyCode === 37
+    && !squares[pacmanCurrentIndex - 1].classList.contains('wall')
+    && !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair'))
+
+    socket.emit('keyPress', { inputId: 'left', state: true });
   //up
-  else if (event.keyCode === 38){
-    if(!squares[pacmanCurrentIndex - width].classList.contains('wall') && !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair')){
-      socket.emit('keyPress', { inputId: 'right', state: false });
-      socket.emit('keyPress', { inputId: 'left', state: false });
-      socket.emit('keyPress', { inputId: 'down', state: false });
-      socket.emit('keyPress', { inputId: 'up', state: true });
-    }
-    else{
-      socket.emit('keyPress', { inputId: 'up', state: false });
-    }
-  }
+  else if (event.keyCode === 38
+    && !squares[pacmanCurrentIndex - width].classList.contains('wall')
+    && !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair'))
 
-    
+    socket.emit('keyPress', { inputId: 'up', state: true });
   //right
-  else if (event.keyCode === 39){
-    if(!squares[pacmanCurrentIndex + 1].classList.contains('wall') && !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair')){
-      socket.emit('keyPress', { inputId: 'up', state: false });
-      socket.emit('keyPress', { inputId: 'left', state: false });
-      socket.emit('keyPress', { inputId: 'down', state: false });
-      socket.emit('keyPress', { inputId: 'right', state: true });
-      if (squares[pacmanCurrentIndex - 1] === squares[443]) {
-        pacmanCurrentIndex = 406
-      }
-    }
-    else{
-      socket.emit('keyPress', { inputId: 'right', state: false });
-    }
+  else if (event.keyCode === 39
+    && !squares[pacmanCurrentIndex + 1].classList.contains('wall')
+    && !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair'))
 
-  }
+    socket.emit('keyPress', { inputId: 'right', state: true });
   //down
-  else if (event.keyCode === 40){
-    if(!squares[pacmanCurrentIndex + width].classList.contains('wall') && !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair')){
-      socket.emit('keyPress', { inputId: 'up', state: false });
-      socket.emit('keyPress', { inputId: 'left', state: false });
-      socket.emit('keyPress', { inputId: 'right', state: false });
-      socket.emit('keyPress', { inputId: 'down', state: true });
-    }
-    else{
-      socket.emit('keyPress', { inputId: 'down', state: false });
-    }
-  }
+  else if (event.keyCode === 40
+    && !squares[pacmanCurrentIndex + width].classList.contains('wall')
+    && !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair'))
 
-
-    
+    socket.emit('keyPress', { inputId: 'down', state: true });
 
 }
 document.onkeyup = function (event) {
   //left
-  if (event.keyCode === 37){
+  if (event.keyCode === 37)
     socket.emit('keyPress', { inputId: 'left', state: false });
-  }
   //up
   else if (event.keyCode === 38)
     socket.emit('keyPress', { inputId: 'up', state: false });
