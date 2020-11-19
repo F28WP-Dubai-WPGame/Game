@@ -142,7 +142,7 @@ document.onkeydown = function (event) {
 
   //left
   if (event.keyCode === 37){
-    if(layout[pacmanCurrentIndex - 1]===2){
+    if(layout[pacmanCurrentIndex - 1]===2 || layout[pacmanCurrentIndex - 1]===7){
       socket.emit('keyPress', { inputId: 'left', state: true });
     }
     else{
@@ -151,7 +151,7 @@ document.onkeydown = function (event) {
   }
   //up
   else if (event.keyCode === 38){
-    if(layout[pacmanCurrentIndex - width]===2){
+    if(layout[pacmanCurrentIndex - width]===2 || layout[pacmanCurrentIndex - width]===7){
       socket.emit('keyPress', { inputId: 'right', state: false });
       socket.emit('keyPress', { inputId: 'left', state: false });
       socket.emit('keyPress', { inputId: 'down', state: false });
@@ -165,7 +165,7 @@ document.onkeydown = function (event) {
     
   //right
   else if (event.keyCode === 39){
-    if(layout[pacmanCurrentIndex + 1]===2){
+    if(layout[pacmanCurrentIndex + 1]===2 || layout[pacmanCurrentIndex + 1]===7){
       socket.emit('keyPress', { inputId: 'up', state: false });
       socket.emit('keyPress', { inputId: 'left', state: false });
       socket.emit('keyPress', { inputId: 'down', state: false });
@@ -181,7 +181,7 @@ document.onkeydown = function (event) {
   }
   //down
   else if (event.keyCode === 40){
-    if(layout[pacmanCurrentIndex + width]===2){
+    if(layout[pacmanCurrentIndex + width]===2 || layout[pacmanCurrentIndex + width]===7){
       socket.emit('keyPress', { inputId: 'up', state: false });
       socket.emit('keyPress', { inputId: 'left', state: false });
       socket.emit('keyPress', { inputId: 'right', state: false });
