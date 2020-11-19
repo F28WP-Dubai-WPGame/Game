@@ -143,6 +143,9 @@ document.onkeydown = function (event) {
   //left
   if (event.keyCode === 37){
     if(layout[pacmanCurrentIndex - 1]===2 || layout[pacmanCurrentIndex - 1]===7){
+      socket.emit('keyPress', { inputId: 'right', state: false });
+      socket.emit('keyPress', { inputId: 'left', state: false });
+      socket.emit('keyPress', { inputId: 'down', state: false });
       socket.emit('keyPress', { inputId: 'left', state: true });
     }
     else{
