@@ -127,10 +127,6 @@ ghosts = [
 
 io.sockets.on('connection', function (socket) {
   
-  socket.emit('classghost',ghosts);
-  socket.emit('moveGhost', ghosts);
-  
-  
 
   socket.id = Math.random();
   SOCKET_LIST[socket.id] = socket;
@@ -138,6 +134,8 @@ io.sockets.on('connection', function (socket) {
   socket.on('signIn', function (data) {
     isValidPass(data, function(res){
       if(res){
+        socket.emit('classghost',ghosts);
+        socket.emit('moveGhost', ghosts);
         Player.onConnect(socket);
         socket.emit('signInResponse',{success:true});
       }
