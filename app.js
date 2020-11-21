@@ -102,27 +102,7 @@ var addUser = function(data,cb){
   });
 }
 
-class Ghost {
-  constructor(className, startIndex, speed) {
-    this.className = className
-    this.startIndex = startIndex
-    this.speed = speed
-    this.currentIndex = startIndex
-    this.isScared = false
-    this.timerId = NaN
-  }
-}
 
-ghosts = [
-  new Ghost('blinky', 378, 250),
-  new Ghost('pinky', 380, 250),
-  new Ghost('inky', 452, 250),
-  new Ghost('clyde', 454, 250),
-  new Ghost('blinky2', 470, 250),
-  new Ghost('pinky2', 472, 250),
-  new Ghost('inky2', 396, 250),
-  new Ghost('clyde2', 398, 250)
-]
 
 
 io.sockets.on('connection', function (socket) {
@@ -134,8 +114,9 @@ io.sockets.on('connection', function (socket) {
   socket.on('signIn', function (data) {
     isValidPass(data, function(res){
       if(res){
-        socket.emit('classghost',ghosts);
-        socket.emit('moveGhost', ghosts);
+        socket.emit('classghost');
+        var i = Math.floor(Math.random() * 4);
+        socket.emit('moveGhost', i);
         Player.onConnect(socket);
         socket.emit('signInResponse',{success:true});
       }

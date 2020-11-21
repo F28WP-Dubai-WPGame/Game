@@ -79,17 +79,39 @@ function createBoard() {
 }
 createBoard();
 
-socket.on('classghost', function(ghosts){
+class Ghost {
+  constructor(className, startIndex, speed) {
+    this.className = className
+    this.startIndex = startIndex
+    this.speed = speed
+    this.currentIndex = startIndex
+    this.isScared = false
+    this.timerId = NaN
+  }
+}
+
+ghosts = [
+  new Ghost('blinky', 378, 250),
+  new Ghost('pinky', 380, 250),
+  new Ghost('inky', 452, 250),
+  new Ghost('clyde', 454, 250),
+  new Ghost('blinky2', 470, 250),
+  new Ghost('pinky2', 472, 250),
+  new Ghost('inky2', 396, 250),
+  new Ghost('clyde2', 398, 250)
+]
+
+socket.on('classghost', function(){
   ghosts.forEach(ghost => {
     squares[ghost.currentIndex].classList.add(ghost.className)
     squares[ghost.currentIndex].classList.add('ghost')
   })
 });
 
-socket.on('moveGhost', function (ghosts){
+socket.on('moveGhost', function (i){
   ghosts.forEach(ghost => {
     const directions = [-1, +1, width, -width]
-    let direction = directions[Math.floor(Math.random() * directions.length)]
+    let direction = directions[i]
   
     ghost.timerId = setInterval(function () {
       //if the next squre your ghost is going to go to does not have a ghost and does not have a wall
@@ -102,7 +124,7 @@ socket.on('moveGhost', function (ghosts){
         ghost.currentIndex += direction
         squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
         //else find a new random direction ot go in
-      } else direction = directions[Math.floor(Math.random() * directions.length)]
+      } else direction = directions[i]
      }, ghost.speed)
   })
 });
@@ -138,7 +160,7 @@ socket.on('newPositions', function (data) {
 });
 
 document.onkeydown = function (event) {
-   squares[pacmanCurrentIndex].classList.remove('pacman')
+   //squares[pacmanCurrentIndex].classList.remove('pacman')
 
   //left
   if (event.keyCode === 37){
