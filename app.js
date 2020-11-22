@@ -41,7 +41,7 @@ var addUser = function (data, cb) {
 }
 
 var startIndices = [200, 300];
-currentPositions = [0, 0]
+var currentPositions = [0, 0]
 io.sockets.on('connection', function (socket) {
 
   socket.on('player-joined', function () {
@@ -52,13 +52,17 @@ io.sockets.on('connection', function (socket) {
 
   setInterval(function () {
     socket.on('newPositions', function (data) {
-      if (data.Code == 300) {
-        currentPositions[0] = data.pacmanCurrentIndex;
-      } else if (data.Code == 200) {
-        currentPositions[1] = data.pacmanCurrentIndex;
+      if (data.code == 300) {
+        currentPositions[0] = data.currentIndex;
+      } else if (data.code == 200) {
+        currentPositions[1] = data.currentIndex;
       }
     })
   }, 100)
+
+  setInterval(function () {
+    // console.log(currentPositions);
+  }, 5000)
 
   socket.id = Math.random();
   SOCKET_LIST[socket.id] = socket;
@@ -103,18 +107,18 @@ io.sockets.on('connection', function (socket) {
 
 });
 
-setInterval(function () {
-  // var pack = [];
+// setInterval(function () {
+//   var pack = [];
 
-  // for (var i in Player.list) {
-  //   var player = Player.list[i];
-  //   player.updatePosition();
-  //   pack.push({
-  //     currentIndex: player.currentIndex
-  //   })
-  // }
-  // for (var i in SOCKET_LIST) {
-  //   var socket = SOCKET_LIST[i];
-  //   socket.emit('newPositions', pack)
-  // }
-}, 1000 / 5)
+//   for (var i in Player.list) {
+//     var player = Player.list[i];
+//     player.updatePosition();
+//     pack.push({
+//       currentIndex: player.currentIndex
+//     })
+//   }
+//   for (var i in SOCKET_LIST) {
+//     var socket = SOCKET_LIST[i];
+//     socket.emit('newPositions', pack)
+//   }
+// }, 1000 / 5)

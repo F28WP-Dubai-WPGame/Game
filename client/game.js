@@ -114,7 +114,11 @@ socket.on('pacman-position', function (data) {
   pacmanCurrentIndex = data.startIndex
 })
 
-socket.emit('newPositions', { code: uniqueCode, currentIndex: pacmanCurrentIndex })
+setInterval(function () {
+  console.log(pacmanCurrentIndex)
+  socket.emit('newPositions', { code: uniqueCode, currentIndex: pacmanCurrentIndex })
+}, 4000)
+
 
 function move(index) {
   for (let j = 0; j < layout.length; j++) {
@@ -124,6 +128,8 @@ function move(index) {
   }
   squares[index].classList.add('pacman')
 }
+
+
 
 document.onkeydown = function (event) {
 
@@ -156,7 +162,8 @@ document.onkeydown = function (event) {
     && !squares[pacmanCurrentIndex + width].classList.contains('wall')
     && !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair')) {
 
-    pacmanCurrentIndex = pacmanCurrentIndex - width
+    pacmanCurrentIndex = pacmanCurrentIndex + width
     move(pacmanCurrentIndex);
   }
 }
+
