@@ -106,80 +106,57 @@ ghosts.forEach(ghost => {
   squares[ghost.currentIndex].classList.add('ghost')
 })
 
-// ghosts.forEach(ghost => moveGhost(ghost))
+let uniqueCode;
+socket.emit('player-joined')
+socket.on('pacman-position', function (data) {
+  squares[data.startIndex].classList.add('pacman');
+  uniqueCode = data.startIndex;
+  pacmanCurrentIndex = data.startIndex
+})
 
-// function moveGhost(ghost) {
-//   const directions = [-1, +1, width, -width]
-//   let direction = directions[Math.floor(Math.random() * directions.length)]
+socket.emit('newPositions', { code: uniqueCode, currentIndex: pacmanCurrentIndex })
 
-//   ghost.timerId = setInterval(function () {
-//     //if the next squre your ghost is going to go to does not have a ghost and does not have a wall
-//     if (!squares[ghost.currentIndex + direction].classList.contains('ghost') &&
-//       !squares[ghost.currentIndex + direction].classList.contains('wall')) {
-//       //remove the ghosts classes
-//       squares[ghost.currentIndex].classList.remove(ghost.className)
-//       squares[ghost.currentIndex].classList.remove('ghost', 'scared')
-//       //move into that space
-//       ghost.currentIndex += direction
-//       squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
-//       //else find a new random direction ot go in
-//     } else direction = directions[Math.floor(Math.random() * directions.length)]
-//   }, ghost.speed)
-// }
-
-socket.on('newPositions', function (data) {
-  for (var i = 0; i < data.length; i++) {
-    for (let j = 0; j < layout.length; j++) {
-      if (squares[j].classList.contains('pacman')) {
-        squares[j].classList.remove('pacman')
-      }
+function move(index) {
+  for (let j = 0; j < layout.length; j++) {
+    if (squares[j].classList.contains('pacman')) {
+      squares[j].classList.remove('pacman')
     }
-    squares[data[i].currentIndex].classList.add('pacman')
-    pacmanCurrentIndex = data[i].currentIndex;
   }
-});
+  squares[index].classList.add('pacman')
+}
 
 document.onkeydown = function (event) {
-  // squares[pacmanCurrentIndex].classList.remove('pacman')
 
   //left
   if (event.keyCode === 37
     && !squares[pacmanCurrentIndex - 1].classList.contains('wall')
-    && !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair'))
+    && !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair')) {
 
-    socket.emit('keyPress', { inputId: 'left', state: true });
-  //up
-  else if (event.keyCode === 38
+    pacmanCurrentIndex = pacmanCurrentIndex - 1
+    move(pacmanCurrentIndex);
+
+    //up
+  } else if (event.keyCode === 38
     && !squares[pacmanCurrentIndex - width].classList.contains('wall')
-    && !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair'))
+    && !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair')) {
 
-    socket.emit('keyPress', { inputId: 'up', state: true });
-  //right
-  else if (event.keyCode === 39
+    pacmanCurrentIndex = pacmanCurrentIndex - width
+    move(pacmanCurrentIndex);
+
+    //right
+  } else if (event.keyCode === 39
     && !squares[pacmanCurrentIndex + 1].classList.contains('wall')
-    && !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair'))
+    && !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair')) {
 
-    socket.emit('keyPress', { inputId: 'right', state: true });
-  //down
-  else if (event.keyCode === 40
+    pacmanCurrentIndex = pacmanCurrentIndex + 1
+    move(pacmanCurrentIndex);
+
+    //down
+  } else if (event.keyCode === 40
     && !squares[pacmanCurrentIndex + width].classList.contains('wall')
-    && !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair'))
+    && !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair')) {
 
-    socket.emit('keyPress', { inputId: 'down', state: true });
-
-}
-document.onkeyup = function (event) {
-  //left
-  if (event.keyCode === 37)
-    socket.emit('keyPress', { inputId: 'left', state: false });
-  //up
-  else if (event.keyCode === 38)
-    socket.emit('keyPress', { inputId: 'up', state: false });
-  //right
-  else if (event.keyCode === 39)
-    socket.emit('keyPress', { inputId: 'right', state: false });
-  //down
-  else if (event.keyCode === 40)
-    socket.emit('keyPress', { inputId: 'down', state: false });
-
+    pacmanCurrentIndex = pacmanCurrentIndex - width
+    move(pacmanCurrentIndex);
+  }
 }
