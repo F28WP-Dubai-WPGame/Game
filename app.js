@@ -115,8 +115,7 @@ io.sockets.on('connection', function (socket) {
     isValidPass(data, function(res){
       if(res){
         socket.emit('classghost');
-        var i = Math.floor(Math.random() * 4);
-        socket.emit('moveGhost', i);
+        socket.emit('moveGhost');
         Player.onConnect(socket);
         socket.emit('signInResponse',{success:true});
       }

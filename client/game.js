@@ -108,10 +108,10 @@ socket.on('classghost', function(){
   })
 });
 
-socket.on('moveGhost', function (i){
+socket.on('moveGhost', function (){
   ghosts.forEach(ghost => {
     const directions = [-1, +1, width, -width]
-    let direction = directions[i]
+    let direction = directions[Math.floor(Math.random() * 4)]
   
     ghost.timerId = setInterval(function () {
       //if the next squre your ghost is going to go to does not have a ghost and does not have a wall
@@ -124,7 +124,7 @@ socket.on('moveGhost', function (i){
         ghost.currentIndex += direction
         squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
         //else find a new random direction ot go in
-      } else direction = directions[i]
+      } else direction = directions[Math.floor(Math.random() * 4)]
      }, ghost.speed)
   })
 });
