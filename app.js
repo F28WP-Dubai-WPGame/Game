@@ -1,5 +1,5 @@
 var mongojs = require("mongojs");
-var db = mongojs('localhost:27017/myGame',['account']);
+var db = mongojs('localhost:27017/myGame', ['account']);
 
 
 var express = require('express');
@@ -19,153 +19,62 @@ serv.listen(3000, function () {
 var SOCKET_LIST = {};
 
 
-function Player(id, startIndex) {
-  var self = {
-    currentIndex: startIndex,
-    id: id,
-    number: "" + Math.floor(10 * Math.random()),
-    pressingRight: false,
-    pressingLeft: false,
-    pressingUp: false,
-    pressingDown: false,
-    width: 37,
-  }
-  self.updatePosition = function () {
-    if (self.pressingRight)
-      self.currentIndex += 1;
-    if (self.pressingLeft)
-      self.currentIndex -= 1;
-    if (self.pressingUp)
-      self.currentIndex -= self.width;
-    if (self.pressingDown)
-      self.currentIndex += self.width;
-  }
-  Player.list[id] = self;
-  return self;
-}
 
-Player.list = {};
-Player.onConnect = function(socket){
-  var player = Player(socket.id, 429);
-	socket.on('keyPress',function(data){
-		if(data.inputId === 'left')
-			player.pressingLeft = data.state;
-		else if(data.inputId === 'right')
-			player.pressingRight = data.state;
-		else if(data.inputId === 'up')
-			player.pressingUp = data.state;
-		else if(data.inputId === 'down')
-			player.pressingDown = data.state;
-	});
-}
-Player.onDisconnect = function(socket){
-	delete Player.list[socket.id];
-}
-Player.update = function(){
-	var pack = [];
-	for(var i in Player.list){
-		var player = Player.list[i];
-		player.update();
-		pack.push({
-			x:player.x,
-			y:player.y,
-			number:player.number
-		});		
-	}
-	return pack;
-}
-
-var USERS = {
-
-}
-
-var isValidPass = function(data,cb){
-  db.account.find({username:data.username, password:data.password}, function(err,res){
-    if(res.length > 0)
+var isValidPass = function (data, cb) {
+  db.account.find({ username: data.username, password: data.password }, function (err, res) {
+    if (res.length > 0)
       cb(true);
     else
       cb(false);
   });
 }
 
-var isUserTaken = function(data,cb){
-  db.account.find({username:data.username}, function(err,res){
-    if(res.length > 0)
+var isUserTaken = function (data, cb) {
+  db.account.find({ username: data.username }, function (err, res) {
+    if (res.length > 0)
       cb(true);
     else
       cb(false);
   });
 }
-var addUser = function(data,cb){
-  db.account.insert({username:data.username, password:data.password}, function(err){
+var addUser = function (data, cb) {
+  db.account.insert({ username: data.username, password: data.password }, function (err) {
     cb();
   });
 }
 
-class Ghost {
-  constructor(className, startIndex, speed) {
-    this.className = className
-    this.startIndex = startIndex
-    this.speed = speed
-    this.currentIndex = startIndex
-    this.isScared = false
-    this.timerId = NaN
-  }
-}
-
-ghosts = [
-  new Ghost('blinky', 378, 250),
-  new Ghost('pinky', 380, 250),
-  new Ghost('inky', 452, 250),
-  new Ghost('clyde', 454, 250),
-  new Ghost('blinky2', 470, 250),
-  new Ghost('pinky2', 472, 250),
-  new Ghost('inky2', 396, 250),
-  new Ghost('clyde2', 398, 250)
-]
-
 
 io.sockets.on('connection', function (socket) {
-  
-  socket.emit('classghost',ghosts);
-  socket.emit('moveGhost', ghosts);
-  
-  
-
-  socket.id = Math.random();
-  SOCKET_LIST[socket.id] = socket;
 
   socket.on('signIn', function (data) {
-    isValidPass(data, function(res){
-      if(res){
-        Player.onConnect(socket);
-        socket.emit('signInResponse',{success:true});
+    isValidPass(data, function (res) {
+      if (res) {
+        // Player.onConnect(socket);
+        socket.emit('signInResponse', { success: true });
       }
-      else{
-        socket.emit('signInResponse',{success:false});
+      else {
+        socket.emit('signInResponse', { success: false });
       }
     });
   });
 
   socket.on('signUp', function (data) {
-    isUserTaken(data, function(res){
-      if(res){
-        socket.emit('signUpResponse',{success:false});
+    isUserTaken(data, function (res) {
+      if (res) {
+        socket.emit('signUpResponse', { success: false });
       }
-      else{
-        addUser(data, function(){
-          socket.emit('signUpResponse',{success:true});
+      else {
+        addUser(data, function () {
+          socket.emit('signUpResponse', { success: true });
         });
       }
     });
   });
 
 
- 
+
 
   socket.on('disconnect', function () {
-    delete SOCKET_LIST[socket.id];
-    Player.onDisconnect(socket);
   });
 
 
@@ -180,17 +89,4 @@ io.sockets.on('connection', function (socket) {
 });
 
 setInterval(function () {
-  var pack = [];
-
-  for (var i in Player.list) {
-    var player = Player.list[i];
-    player.updatePosition();
-    pack.push({
-      currentIndex: player.currentIndex
-    })
-  }
-  for (var i in SOCKET_LIST) {
-    var socket = SOCKET_LIST[i];
-    socket.emit('newPositions', pack)
-  }
 }, 1000 / 5)
