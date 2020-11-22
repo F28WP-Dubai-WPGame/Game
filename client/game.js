@@ -166,7 +166,7 @@ document.onkeydown = function (event) {
   if (event.keyCode === 37){
     if(!squares[pacmanCurrentIndex - 1].classList.contains('wall') && !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair')){
       socket.emit('keyPress', { inputId: 'right', state: false });
-      socket.emit('keyPress', { inputId: 'left', state: false });
+      socket.emit('keyPress', { inputId: 'up', state: false });
       socket.emit('keyPress', { inputId: 'down', state: false });
       socket.emit('keyPress', { inputId: 'left', state: true });
     }
