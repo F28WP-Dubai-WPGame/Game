@@ -8,6 +8,8 @@ var signDivPassword = document.getElementById('signDiv-password');
 let username;
 signDivSignIn.onclick = function () {
   socket.emit('signIn', { username: signDivUsername.value, password: signDivPassword.value });
+  username= signDivUsername.value;
+  console.log(username);
 }
 
 signDivSignUp.onclick = function () {
@@ -147,6 +149,7 @@ function move(currentIndex, previousIndex) {
   squares[previousIndex].classList.remove('pacman')
   squares[currentIndex].classList.add('pacman')
 }
+var unScare;
 
 document.onkeyup = function (event) {
 
@@ -160,6 +163,13 @@ document.onkeyup = function (event) {
       score++;
       console.log(score);
     }
+
+    if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
+      squares[pacmanCurrentIndex].classList.remove('power-pellet')
+      score+=10;
+      console.log(score);
+    }
+
 
     pacmanPreviousIndex = pacmanCurrentIndex;
     pacmanCurrentIndex = pacmanCurrentIndex - 1
@@ -177,6 +187,13 @@ document.onkeyup = function (event) {
       console.log(score);
     }
 
+    if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
+      squares[pacmanCurrentIndex].classList.remove('power-pellet')
+      score+=10;
+      console.log(score);
+    }
+
+
     pacmanPreviousIndex = pacmanCurrentIndex;
     pacmanCurrentIndex = pacmanCurrentIndex - width
     move(pacmanCurrentIndex, pacmanPreviousIndex);
@@ -191,6 +208,12 @@ document.onkeyup = function (event) {
       score++;
       console.log(score);
     }
+    if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
+      squares[pacmanCurrentIndex].classList.remove('power-pellet')
+      score+=10;
+      console.log(score);
+    }
+
 
     pacmanPreviousIndex = pacmanCurrentIndex;
     pacmanCurrentIndex = pacmanCurrentIndex + 1
@@ -207,9 +230,68 @@ document.onkeyup = function (event) {
       console.log(score);
     }
 
+    if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
+      squares[pacmanCurrentIndex].classList.remove('power-pellet')
+      score+=10;
+      // unScare= setTimeout(function ​​(){
+      //   ghosts.forEach(ghost => ghost.isScared = false)
+      // }, 3000);
+      // setInterval(function(){​​alert("Hello")}​​,3000);
+      console.log(score);
+    }
+
     pacmanPreviousIndex = pacmanCurrentIndex;
     pacmanCurrentIndex = pacmanCurrentIndex + width
     move(pacmanCurrentIndex, pacmanPreviousIndex);
   }
 }
 
+
+ghosts.forEach(ghost => moveGhost(ghost))
+
+function moveGhost(ghost) {
+  const directions = [-1, +1, width, -width]
+  let direction = directions[Math.floor(Math.random() * directions.length)]
+
+  ghost.timerId = setInterval(function () {
+    //if the next squre your ghost is going to go to does not have a ghost and does not have a wall
+    if (!squares[ghost.currentIndex + direction].classList.contains('ghost') &&
+      !squares[ghost.currentIndex + direction].classList.contains('wall')) {
+      //remove the ghosts classes
+      squares[ghost.currentIndex].classList.remove(ghost.className)
+      squares[ghost.currentIndex].classList.remove('ghost', 'scared')
+      //move into that space
+      ghost.currentIndex += direction
+      squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
+      //else find a new random direction ot go in
+    } else direction = directions[Math.floor(Math.random() * directions.length)]
+
+    //if the ghost is currently scared
+    if (ghost.isScared) {
+      squares[ghost.currentIndex].classList.add('scared')
+    }
+
+    //if the ghost is currently scared and pacman is on it
+    if (ghost.isScared && squares[ghost.currentIndex].classList.contains('pacman')) {
+      squares[ghost.currentIndex].classList.remove(ghost.className, 'ghost', 'scared')
+      ghost.currentIndex = ghost.startIndex
+      score += 100
+      squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
+    }
+    //checkForGameOver()
+  }, ghost.speed)
+}
+
+
+// function powerPelletEaten() {
+//   if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
+//     score += 10
+//     ghosts.forEach(ghost => ghost.isScared = true)
+//     setTimeout(unScareGhosts, 10000)
+//     squares[pacmanCurrentIndex].classList.remove('power-pellet')
+//   }
+// }
+
+// function unScareGhosts() {
+//   ghosts.forEach(ghost => ghost.isScared = false)
+// }
