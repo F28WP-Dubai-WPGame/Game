@@ -21,7 +21,24 @@
     <div class="game">
       <div class="grid"></div>
       <div class="scorediv">
-        <div class="score"></div>
+        <table style="width:100%">
+          <tr>
+            <td>
+              <div id="player1" class="score"></div>
+            </td>
+            <td>
+              <div id="player2" class="score"></div>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <div id="player3" class="score"></div>
+            </td>
+            <td>
+              <div id="player4" class="score"></div>
+            </td>
+          </tr>
+          <tr>
       </div>
     </div>
     <div class="chat">
@@ -32,10 +49,10 @@
           <span id='date' class="time-right">11:05</span>
         </div>
       </div>
-    <form id="chat-form" autocomplete="off">
-      <input id="chat-input" type="text" style="width:300px"></input>
-    </form>
-  </div>
+      <form id="chat-form" autocomplete="off">
+        <input id="chat-input" type="text" style="width:300px"></input>
+      </form>
+    </div>
 </body>
 
 <script src="client/chat.js"></script>

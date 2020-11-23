@@ -41,8 +41,9 @@ var addUser = function (data, cb) {
   });
 }
 
-var uniqueCodes = [202, 300];
-var currentScores = [-1, -1]
+var uniqueCodes = [200, 300, 400, 500];
+var currentScores = [0, 0, 0, 0]
+var userNames = ["Player 1", "Player 2", "Player 3", "Player 4"]
 io.sockets.on('connection', function (socket) {
 
   socket.on('player-joined', function () {
@@ -53,16 +54,32 @@ io.sockets.on('connection', function (socket) {
 
   setInterval(function () {
     socket.on('updateScores', function (data) {
-      if (data.code == 300) {
+      if (data.code == 500) {
         currentScores[0] = data.currentScore;
-      } else if (data.code == 202) {
+      } else if (data.code == 400) {
         currentScores[1] = data.currentScore;
+      } else if (data.code == 300) {
+        currentScores[2] = data.currentScore;
+      } else if (data.code == 200) {
+        currentScores[3] = data.currentScore;
       }
     })
   }, 100)
 
+  socket.on('currentUserName', function (data) {
+    if (data.code == 500) {
+      userNames[0] = data.clientName;
+    } else if (data.code == 400) {
+      userNames[1] = data.clientName;
+    } else if (data.code == 300) {
+      userNames[2] = data.clientName;
+    } else if (data.code == 200) {
+      userNames[3] = data.clientName;
+    }
+  })
+
   setInterval(function () {
-    console.log(currentScores);
+    console.log(userNames);
   }, 3000)
 
   socket.id = Math.random();

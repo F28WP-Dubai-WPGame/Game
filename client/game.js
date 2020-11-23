@@ -5,10 +5,15 @@ var signDivSignIn = document.getElementById('signDiv-signIn');
 var signDivSignUp = document.getElementById('signDiv-signUp');
 var signDivPassword = document.getElementById('signDiv-password');
 
+var player1 = document.getElementById('player1');
+var player2 = document.getElementById('player2');
+var player3 = document.getElementById('player3');
+var player4 = document.getElementById('player4');
+
 let username;
 signDivSignIn.onclick = function () {
   socket.emit('signIn', { username: signDivUsername.value, password: signDivPassword.value });
-  username= signDivUsername.value;
+  username = signDivUsername.value;
   console.log(username);
 }
 
@@ -20,6 +25,7 @@ socket.on('signInResponse', function (data) {
   if (data.success) {
     signDiv.style.display = 'none';
     gamestuff.style.display = 'inline-block';
+    socket.emit('currentUserName', { code: uniqueCode, clientName: username })
   } else
     alert("Sign in unsuccessful.");
 });
@@ -166,7 +172,7 @@ document.onkeyup = function (event) {
 
     if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
       squares[pacmanCurrentIndex].classList.remove('power-pellet')
-      score+=10;
+      score += 10;
       console.log(score);
     }
 
@@ -189,7 +195,7 @@ document.onkeyup = function (event) {
 
     if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
       squares[pacmanCurrentIndex].classList.remove('power-pellet')
-      score+=10;
+      score += 10;
       console.log(score);
     }
 
@@ -210,7 +216,7 @@ document.onkeyup = function (event) {
     }
     if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
       squares[pacmanCurrentIndex].classList.remove('power-pellet')
-      score+=10;
+      score += 10;
       console.log(score);
     }
 
@@ -232,7 +238,7 @@ document.onkeyup = function (event) {
 
     if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
       squares[pacmanCurrentIndex].classList.remove('power-pellet')
-      score+=10;
+      score += 10;
       // unScare= setTimeout(function ​​(){
       //   ghosts.forEach(ghost => ghost.isScared = false)
       // }, 3000);
