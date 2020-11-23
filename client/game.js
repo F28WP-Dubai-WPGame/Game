@@ -5,6 +5,7 @@ var signDivSignIn = document.getElementById('signDiv-signIn');
 var signDivSignUp = document.getElementById('signDiv-signUp');
 var signDivPassword = document.getElementById('signDiv-password');
 
+let username;
 signDivSignIn.onclick = function () {
   socket.emit('signIn', { username: signDivUsername.value, password: signDivPassword.value });
 }
@@ -28,8 +29,9 @@ socket.on('signUpResponse', function (data) {
     alert("Sign up unsuccessful.");
 });
 
-let pacmanCurrentIndex;
+let pacmanCurrentIndex = 203;
 let pacmanPreviousIndex;
+let score = 0;
 const width = 37;
 const grid = document.querySelector('.grid')
 const layout = [
@@ -118,21 +120,20 @@ ghosts.forEach(ghost => {
 
 let uniqueCode;
 socket.emit('player-joined')
-socket.on('pacman-position', function (data) {
-  squares[data.startIndex].classList.add('pacman');
-  uniqueCode = data.startIndex;
-  pacmanCurrentIndex = data.startIndex
+socket.on('pacman-code', function (data) {
+  squares[pacmanCurrentIndex].classList.add('pacman')
+  uniqueCode = data.playerCode;
 })
 
 setInterval(function () {
-  console.log(pacmanCurrentIndex)
-  socket.emit('updatePositions', { code: uniqueCode, currentIndex: pacmanCurrentIndex })
-  socket.on('allPositions', function (data) {
-    // console.log(data);
-    for (var i = 0; i < data.length; i++) {
-      squares[data[i]].classList.add('pacman')
-    }
-  })
+  // console.log(pacmanCurrentIndex)
+  socket.emit('updateScores', { code: uniqueCode, currentScore: score })
+  // socket.on('allPositions', function (data) {
+  //   // console.log(data);
+  //   // for (var i = 0; i < data.length; i++) {
+  //   //   squares[data[i]].classList.add('pacman')
+  //   // }
+  // })
 }, 100)
 
 
@@ -142,11 +143,10 @@ function move(currentIndex, previousIndex) {
   //     squares[j].classList.remove('pacman')
   //   }
   // }
+
   squares[previousIndex].classList.remove('pacman')
   squares[currentIndex].classList.add('pacman')
 }
-
-
 
 document.onkeyup = function (event) {
 
@@ -155,27 +155,42 @@ document.onkeyup = function (event) {
     && !squares[pacmanCurrentIndex - 1].classList.contains('wall')
     && !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair')) {
 
+    if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
+      squares[pacmanCurrentIndex].classList.remove('pac-dot')
+      score++;
+      console.log(score);
+    }
+
     pacmanPreviousIndex = pacmanCurrentIndex;
-    console.log(`pacmanPreviousIndex' ${pacmanPreviousIndex}`);
     pacmanCurrentIndex = pacmanCurrentIndex - 1
-    console.log(`pacmanCurrentIndex ${pacmanCurrentIndex}`);
     move(pacmanCurrentIndex, pacmanPreviousIndex);
+
 
     //up
   } else if (event.keyCode === 38
     && !squares[pacmanCurrentIndex - width].classList.contains('wall')
     && !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair')) {
 
+    if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
+      squares[pacmanCurrentIndex].classList.remove('pac-dot');
+      score++;
+      console.log(score);
+    }
+
     pacmanPreviousIndex = pacmanCurrentIndex;
-    console.log(`pacmanPreviousIndex' ${pacmanPreviousIndex}`);
     pacmanCurrentIndex = pacmanCurrentIndex - width
-    console.log(`pacmanCurrentIndex ${pacmanCurrentIndex}`);
     move(pacmanCurrentIndex, pacmanPreviousIndex);
 
     //right
   } else if (event.keyCode === 39
     && !squares[pacmanCurrentIndex + 1].classList.contains('wall')
     && !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair')) {
+
+    if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
+      squares[pacmanCurrentIndex].classList.remove('pac-dot')
+      score++;
+      console.log(score);
+    }
 
     pacmanPreviousIndex = pacmanCurrentIndex;
     pacmanCurrentIndex = pacmanCurrentIndex + 1
@@ -185,6 +200,12 @@ document.onkeyup = function (event) {
   } else if (event.keyCode === 40
     && !squares[pacmanCurrentIndex + width].classList.contains('wall')
     && !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair')) {
+
+    if (squares[pacmanCurrentIndex].classList.contains('pac-dot')) {
+      squares[pacmanCurrentIndex].classList.remove('pac-dot')
+      score++;
+      console.log(score);
+    }
 
     pacmanPreviousIndex = pacmanCurrentIndex;
     pacmanCurrentIndex = pacmanCurrentIndex + width

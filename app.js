@@ -18,6 +18,7 @@ serv.listen(3000, function () {
 
 var SOCKET_LIST = {};
 
+
 var isValidPass = function (data, cb) {
   db.account.find({ username: data.username, password: data.password }, function (err, res) {
     if (res.length > 0)
@@ -40,29 +41,29 @@ var addUser = function (data, cb) {
   });
 }
 
-var startIndices = [202, 300];
-var currentPositions = [-1, -1]
+var uniqueCodes = [202, 300];
+var currentScores = [-1, -1]
 io.sockets.on('connection', function (socket) {
 
   socket.on('player-joined', function () {
-    let temp = startIndices.pop();
-    socket.emit('pacman-position', { startIndex: temp })
+    let temp = uniqueCodes.pop();
+    socket.emit('pacman-code', { playerCode: temp })
     console.log(temp);
   })
 
   setInterval(function () {
-    socket.on('updatePositions', function (data) {
+    socket.on('updateScores', function (data) {
       if (data.code == 300) {
-        currentPositions[0] = data.currentIndex;
+        currentScores[0] = data.currentScore;
       } else if (data.code == 202) {
-        currentPositions[1] = data.currentIndex;
+        currentScores[1] = data.currentScore;
       }
     })
   }, 100)
 
   setInterval(function () {
-    socket.emit('allPositions', currentPositions)
-  }, 500)
+    console.log(currentScores);
+  }, 3000)
 
   socket.id = Math.random();
   SOCKET_LIST[socket.id] = socket;
