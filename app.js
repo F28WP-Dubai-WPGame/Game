@@ -40,8 +40,8 @@ var addUser = function (data, cb) {
   });
 }
 
-var startIndices = [200, 300];
-var currentPositions = [0, 0]
+var startIndices = [202, 300];
+var currentPositions = [-1, -1]
 io.sockets.on('connection', function (socket) {
 
   socket.on('player-joined', function () {
@@ -51,18 +51,18 @@ io.sockets.on('connection', function (socket) {
   })
 
   setInterval(function () {
-    socket.on('newPositions', function (data) {
+    socket.on('updatePositions', function (data) {
       if (data.code == 300) {
         currentPositions[0] = data.currentIndex;
-      } else if (data.code == 200) {
+      } else if (data.code == 202) {
         currentPositions[1] = data.currentIndex;
       }
     })
   }, 100)
 
   setInterval(function () {
-    // console.log(currentPositions);
-  }, 5000)
+    socket.emit('allPositions', currentPositions)
+  }, 500)
 
   socket.id = Math.random();
   SOCKET_LIST[socket.id] = socket;

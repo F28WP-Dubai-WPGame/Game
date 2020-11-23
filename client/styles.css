@@ -51,6 +51,12 @@ body,html {
   z-index: 10;
 }
 
+.hw-wall {
+  background-color: red;
+  outline:1px solid red;
+  z-index: 10;
+}
+
 .blank {
   background: black;
 }
