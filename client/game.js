@@ -29,6 +29,7 @@ socket.on('signUpResponse', function (data) {
 });
 
 let pacmanCurrentIndex;
+let pacmanPreviousIndex;
 const width = 37;
 const grid = document.querySelector('.grid')
 const layout = [
@@ -79,6 +80,12 @@ function createBoard() {
       squares[i].classList.add('blank')
     }
   }
+
+  for (let j = 0; j < layout.length; j++) {
+    if (squares[j].classList.contains('pacman')) {
+      squares[j].classList.remove('pacman')
+    }
+  }
 }
 createBoard();
 
@@ -121,58 +128,67 @@ setInterval(function () {
   console.log(pacmanCurrentIndex)
   socket.emit('updatePositions', { code: uniqueCode, currentIndex: pacmanCurrentIndex })
   socket.on('allPositions', function (data) {
-    console.log(data);
+    // console.log(data);
     for (var i = 0; i < data.length; i++) {
       squares[data[i]].classList.add('pacman')
     }
   })
-}, 4000)
+}, 100)
 
 
-function move(index) {
-  for (let j = 0; j < layout.length; j++) {
-    if (squares[j].classList.contains('pacman')) {
-      squares[j].classList.remove('pacman')
-    }
-  }
-  squares[index].classList.add('pacman')
+function move(currentIndex, previousIndex) {
+  // for (let j = 0; j < layout.length; j++) {
+  //   if (squares[j].classList.contains('pacman')) {
+  //     squares[j].classList.remove('pacman')
+  //   }
+  // }
+  squares[previousIndex].classList.remove('pacman')
+  squares[currentIndex].classList.add('pacman')
 }
 
 
 
-document.onkeydown = function (event) {
+document.onkeyup = function (event) {
 
   //left
   if (event.keyCode === 37
     && !squares[pacmanCurrentIndex - 1].classList.contains('wall')
     && !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair')) {
 
+    pacmanPreviousIndex = pacmanCurrentIndex;
+    console.log(`pacmanPreviousIndex' ${pacmanPreviousIndex}`);
     pacmanCurrentIndex = pacmanCurrentIndex - 1
-    move(pacmanCurrentIndex);
+    console.log(`pacmanCurrentIndex ${pacmanCurrentIndex}`);
+    move(pacmanCurrentIndex, pacmanPreviousIndex);
 
     //up
   } else if (event.keyCode === 38
     && !squares[pacmanCurrentIndex - width].classList.contains('wall')
     && !squares[pacmanCurrentIndex - width].classList.contains('ghost-lair')) {
 
+    pacmanPreviousIndex = pacmanCurrentIndex;
+    console.log(`pacmanPreviousIndex' ${pacmanPreviousIndex}`);
     pacmanCurrentIndex = pacmanCurrentIndex - width
-    move(pacmanCurrentIndex);
+    console.log(`pacmanCurrentIndex ${pacmanCurrentIndex}`);
+    move(pacmanCurrentIndex, pacmanPreviousIndex);
 
     //right
   } else if (event.keyCode === 39
     && !squares[pacmanCurrentIndex + 1].classList.contains('wall')
     && !squares[pacmanCurrentIndex + 1].classList.contains('ghost-lair')) {
 
+    pacmanPreviousIndex = pacmanCurrentIndex;
     pacmanCurrentIndex = pacmanCurrentIndex + 1
-    move(pacmanCurrentIndex);
+    move(pacmanCurrentIndex, pacmanPreviousIndex);
 
     //down
   } else if (event.keyCode === 40
     && !squares[pacmanCurrentIndex + width].classList.contains('wall')
     && !squares[pacmanCurrentIndex + width].classList.contains('ghost-lair')) {
 
+    pacmanPreviousIndex = pacmanCurrentIndex;
     pacmanCurrentIndex = pacmanCurrentIndex + width
-    move(pacmanCurrentIndex);
+    move(pacmanCurrentIndex, pacmanPreviousIndex);
   }
 }
 
