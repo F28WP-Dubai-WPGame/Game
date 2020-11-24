@@ -1,5 +1,5 @@
 body,html {
-  background: url(pacman.PNG) no-repeat center center fixed;
+  background: url(pacman.PNG) no-repeat center center fixed; /* Centering a background image */
   background-color: white;
   background-size: cover;
 }
@@ -10,7 +10,7 @@ body,html {
   margin: auto auto;
   position: absolute;
   top: 50%;
-  -ms-transform: translateY(-50%);
+  -ms-transform: translateY(-50%); /* This moves the inner element back up a distance of half the height of the inner element */
   transform: translateY(-50%);
 }
 
@@ -41,7 +41,7 @@ body,html {
 .pac-dot {
   background-color: white;   
   border: 8px solid black;
-  box-sizing: border-box;
+  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
   border-radius: 100%;
 }
 
@@ -58,7 +58,7 @@ body,html {
 .power-pellet {
   background-color: white;   
   border: 4px solid black;
-  box-sizing: border-box;
+  box-sizing: border-box; /* Includes padding and border in the element's total width and height */
   border-radius: 100%;
 }
 
@@ -66,8 +66,8 @@ body,html {
   background-color: yellow;
   border: none;
   border-radius: 50%;
-  z-index: 10000000000;
-  clip-path: polygon(
+  z-index: 10000000000; /* The z-index CSS property sets the z-order of a positioned element and its descendants or flex items */
+  clip-path: polygon(  /*The clip-path CSS property creates a clipping region that sets what part of an element should be shown */
     0 0,
     20px 0,
     20px -5px,
@@ -96,7 +96,7 @@ body,html {
 }
 
 @keyframes chew {
-  50% {
+  50% { /* The clip-path CSS property creates a clipping region that sets what part of an element should be shown */
     clip-path: polygon(
       0 0,
       20px 0,
