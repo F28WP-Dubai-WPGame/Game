@@ -141,18 +141,3 @@ io.sockets.on('connection', function (socket) {
 
 });
 
-// setInterval(function () {
-//   var pack = [];
-
-//   for (var i in Player.list) {
-//     var player = Player.list[i];
-//     player.updatePosition();
-//     pack.push({
-//       currentIndex: player.currentIndex
-//     })
-//   }
-//   for (var i in SOCKET_LIST) {
-//     var socket = SOCKET_LIST[i];
-//     socket.emit('newPositions', pack)
-//   }
-// }, 1000 / 5)
