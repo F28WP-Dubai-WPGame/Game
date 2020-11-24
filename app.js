@@ -41,10 +41,18 @@ var addUser = function (data, cb) {
   });
 }
 
+var roomno = 1;
 var uniqueCodes = [200, 300, 400, 500];
 var currentScores = [0, 0, 0, 0]
 var userNames = ["Player 1", "Player 2", "Player 3", "Player 4"]
 io.sockets.on('connection', function (socket) {
+
+  // //Increase roomno 2 clients are present in a room.
+  // if (io.nsps['/'].adapter.rooms["room-" + roomno] && io.nsps['/'].adapter.rooms["room-" + roomno].length > 1) roomno++;
+  // socket.join("room-" + roomno);
+
+  // //Send this event to everyone in the room.
+  // io.sockets.in("room-" + roomno).emit('connectToRoom', "You are in room no. " + roomno);
 
   socket.on('player-joined', function () {
     let temp = uniqueCodes.pop();
@@ -64,6 +72,13 @@ io.sockets.on('connection', function (socket) {
         currentScores[3] = data.currentScore;
       }
     })
+
+    socket.emit('allScores', currentScores)
+    socket.emit('allPlayers', userNames)
+
+
+
+    // console.log(currentScores);
   }, 100)
 
   socket.on('currentUserName', function (data) {
@@ -78,8 +93,9 @@ io.sockets.on('connection', function (socket) {
     }
   })
 
+
   setInterval(function () {
-    console.log(userNames);
+    // console.log(userNames);
   }, 3000)
 
   socket.id = Math.random();
@@ -110,7 +126,7 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('disconnect', function () {
-    // delete SOCKET_LIST[socket.id];
+    delete currentScores
     // Player.onDisconnect(socket);
   });
 
