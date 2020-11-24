@@ -261,7 +261,7 @@ function moveGhost(ghost) {
       score += 100
       squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
     }
-    //checkForGameOver()
+    checkForGameOver()
   }, ghost.speed)
 }
 
@@ -278,3 +278,12 @@ function unScareGhosts() {
   ghosts.forEach(ghost => ghost.isScared = false)
 }
 
+//check for a game over
+function checkForGameOver() {
+  if (squares[pacmanCurrentIndex].classList.contains('ghost') &&
+    !squares[pacmanCurrentIndex].classList.contains('scared')) {
+    squares[pacmanCurrentIndex].classList.remove('pacman', 'pacman-left', 'pacman-up', 'pacman-down', 'pacman-right')
+    ghosts.forEach(ghost => clearInterval(ghost.timerId))
+    setTimeout(function () { alert("Game Over"); }, 500)
+  }
+}
