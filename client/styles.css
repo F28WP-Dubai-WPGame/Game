@@ -1,5 +1,5 @@
 body,html {
-  /* background: url(pacman.PNG) no-repeat center center fixed; */
+ /* background: url(pacman.PNG) no-repeat center center fixed; */
   background-color: white;
   background-size: cover;
 }
@@ -191,3 +191,144 @@ body,html {
 .clyde2 {
   background: orange;
 }
+
+.player1 {
+  background: blue;
+}
+
+.score1 {
+  background: black;
+  text-align:center;
+  font-size:25px;
+  font-family: 'Galada', cursive ;
+  color : yellow;
+  width: 50px;
+  border: 5px solid rgb(40, 3, 247);
+  height:35px;
+  width:250px;
+  margin: 20px;
+  margin-left:-70px;
+}
+
+.score2 {
+  background: black;
+  text-align:center;
+  font-size:25px;
+  font-family: 'Galada', cursive;
+  color: yellow;
+  width: 50px;
+  border: 5px solid rgb(40, 3, 247);
+  height:35px;
+  width:250px;
+  margin: 20px;
+  margin-left: -10px;
+}
+
+.score3 {
+  background: black;
+  text-align:center;
+  font-size:25px;
+  font-family: 'Galada', cursive;
+  color:yellow;
+  width: 50px;
+  border: 5px solid rgb(40, 3, 247);
+  height:35px;
+  width:250px;
+  margin: 20px;
+  margin-left: -70px;
+  margin-top:-10px;
+}
+
+.score4 {
+  background: black;
+  text-align:center;
+  font-size:25px;
+  font-family: 'Galada', cursive;
+  color:yellow;
+  width: 50px;
+  border: 5px solid rgb(40, 3, 247);
+  height:35px;
+  width:250px;
+  margin: 20px;
+  margin-left: -10px;
+  margin-top:-10px;
+}
+
+
+#signDiv-username {
+  text-align:center;
+  font-size:28px;
+  font-family: 'Galada', cursive;
+  color:black;
+  width: 50px;
+  border: 5px solid rgba(42, 12, 212, 0.26);
+  height:35px;
+  width:250px;
+  margin: 20px;
+  background: rgba(255, 255, 255, 0.822);
+  margin-left: 20px;
+  margin-top:-20px;
+}
+
+#signDiv-password {
+  text-align:center;
+  font-size:28px;
+  font-family: 'Galada', cursive;
+  color:black;
+  width: 50px;
+  border: 5px solid rgb(42, 12, 212, 0.26);
+  height:35px;
+  width:250px;
+  margin: 20px;
+  background: rgba(255, 255, 255, 0.822);
+  margin-left: 20px;
+  margin-top:20px;
+}
+
+#signDiv-signIn {
+  font-size:28px;
+  font-family: 'Galada', cursive;
+  color:black;
+  border: 5px solid rgb(42, 12, 212, 0.26);
+  background: rgba(255, 255, 255, 0.822);
+  margin-left: 600px;
+  margin-top:15px;
+  height:50px;
+  width:140px;
+}
+
+#signDiv-signUp {
+  font-size:28px;
+  font-family: 'Galada', cursive;
+  color:black;
+  border: 5px solid rgb(42, 12, 212, 0.26);
+  background: rgba(255, 255, 255, 0.822);
+  margin:20px;
+  height:50px;
+  width:140px;
+}
+
+.pacc {
+  color:rgb(255, 238, 4);
+  font-family: 'Galada', cursive;
+  margin-left: 460px;
+  font-size: 50px;
+}
+
+.userr {
+  color:rgb(255, 238, 4);
+  font-family: 'Galada', cursive;
+  margin-left:520px;
+  margin-top:-40px;
+  float:left;
+  
+}
+
+.passs {
+  color:rgb(255, 238, 4);
+  font-family: 'Galada', cursive;
+  margin-left:-140px;
+  margin-top:45px;
+  float:left ;
+}
+
