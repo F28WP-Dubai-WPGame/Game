@@ -165,7 +165,9 @@ function move(currentIndex, previousIndex) {
   squares[currentIndex].classList.add('pacman')
 }
 
-document.onkeyup = function (event) {
+document.addEventListener('keyup', movePacman)
+
+function movePacman(event) {
 
   //left
   if (event.keyCode === 37 && !squares[pacmanCurrentIndex - 1].classList.contains('wall') && !squares[pacmanCurrentIndex - 1].classList.contains('ghost-lair')) {
@@ -288,6 +290,8 @@ function checkForGameOver() {
     squares[pacmanCurrentIndex].classList.remove('pacman', 'pacman-left', 'pacman-up', 'pacman-down', 'pacman-right')
     ghosts.forEach(ghost => clearInterval(ghost.timerId))
     setTimeout(function () { alert("Game Over"); }, 500)
+    // socket.emit('playerGameOver', { code: uniqueCode, gameState: false })
+    document.removeEventListener('keyup', movePacman)
   }
 }
 

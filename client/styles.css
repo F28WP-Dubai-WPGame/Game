@@ -1,6 +1,6 @@
 body,html {
   /* background: url(pacman.PNG) no-repeat center center fixed; */
-  background-color: white;
+  background-color: black;
   background-size: cover;
 }
 
@@ -55,8 +55,7 @@ body,html {
 }
 
 .wall {
-  background-color: #0000cc;
-  outline:1px solid #0000cc;
+  background-color: #c94c4c;
   z-index: 10;
 }
 

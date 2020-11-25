@@ -20,10 +20,6 @@ serv.listen(port, function () {
   console.log('Server in up and running!');
 });
 
-// serv.listen(3000, function () {
-//   console.log("Server started on http://localhost:3000/");
-// });
-
 var SOCKET_LIST = {};
 
 
@@ -54,6 +50,8 @@ var uniqueCodes = [200, 300, 400, 500];
 var currentScores = [0, 0, 0, 0]
 var userNames = ["Player 1", "Player 2", "Player 3", "Player 4"]
 io.sockets.on('connection', function (socket) {
+
+  socket.join('some room')
 
   // //Increase roomno 2 clients are present in a room.
   // if (io.nsps['/'].adapter.rooms["room-" + roomno] && io.nsps['/'].adapter.rooms["room-" + roomno].length > 1) roomno++;
@@ -136,8 +134,7 @@ io.sockets.on('connection', function (socket) {
   });
 
   socket.on('disconnect', function () {
-    delete currentScores
-    // Player.onDisconnect(socket);
+
   });
 
 
