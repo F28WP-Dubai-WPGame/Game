@@ -16,6 +16,9 @@
   ],
   "author": "Abdullah Meda",
   "license": "ISC",
+  "engines": {
+    "node": "14.15.0"
+  },
   "bugs": {
     "url": "https://github.com/F28WP-Dubai-WPGame/PacMan_Rush/issues"
   },

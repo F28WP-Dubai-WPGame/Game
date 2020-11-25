@@ -1,5 +1,5 @@
 var mongojs = require("mongojs");
-var db = mongojs('localhost:27017/myGame', ['account']);
+var db = mongojs('mongodb+srv://abdullah:discord123@@pacman.gwmyn.mongodb.net/myGame?retryWrites=true&w=majority/myGame', ['account']);
 
 
 var express = require('express');
@@ -12,9 +12,17 @@ app.get('/', function (req, res) {
 });
 app.use('/client', express.static(__dirname + '/client'));
 
-serv.listen(3000, function () {
-  console.log("Server started on http://localhost:3000/");
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 3000;
+}
+serv.listen(port, function () {
+  console.log('Server in up and running!');
 });
+
+// serv.listen(3000, function () {
+//   console.log("Server started on http://localhost:3000/");
+// });
 
 var SOCKET_LIST = {};
 
@@ -76,8 +84,6 @@ io.sockets.on('connection', function (socket) {
     socket.emit('allScores', currentScores)
     socket.emit('allPlayers', userNames)
 
-
-
     // console.log(currentScores);
   }, 100)
 
@@ -91,7 +97,11 @@ io.sockets.on('connection', function (socket) {
     } else if (data.code == 200) {
       userNames[3] = data.clientName;
     }
+    // if (userNames[0] !== "Player 1" && userNames[1] !== "Player 2" && userNames[2] !== "Player 3" && userNames[3] !== "Player 4") {
+    //   socket.emit('startGame')
+    // }
   })
+
 
 
   setInterval(function () {
@@ -141,3 +151,19 @@ io.sockets.on('connection', function (socket) {
 
 });
 
+// app.get('/test', function (req, res) {
+//   res.sendFile(__dirname + '/client/test.html');
+// });
+
+// app.post('/test', function (req, res) {
+//   // setTimeout(function () {
+//   //   res.redirect('/')
+//   // }, 5000)
+//   res.redirect('/')
+// })
+
+
+// io.sockets.on('connection', function (socket) {
+
+
+// })
