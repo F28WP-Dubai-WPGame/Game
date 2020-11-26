@@ -87,16 +87,16 @@ io.sockets.on('connection', function (socket) {
     }
   })
 
-  setInterval(function () {
+  // setInterval(function () {
 
-    for (var i = 0; i < 4; i++) {
-      if (currentScores[i] >= 200) {
-        var winningPlayer = userNames[i];
-        socket.emit('player-won', winningPlayer)
-        console.log(winningPlayer);
-      }
-    }
-  }, 300)
+  //   for (var i = 0; i < 4; i++) {
+  //     if (currentScores[i] >= 200) {
+  //       var winningPlayer = userNames[i];
+  //       socket.emit('player-won', winningPlayer)
+  //       console.log(winningPlayer);
+  //     }
+  //   }
+  // }, 300)
 
   socket.id = Math.random();
   SOCKET_LIST[socket.id] = socket;

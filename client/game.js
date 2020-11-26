@@ -241,6 +241,9 @@ function movePacman(event) {
     move(pacmanCurrentIndex, pacmanPreviousIndex);
     squares[pacmanCurrentIndex].classList.add('pacman-down')
   }
+  if (score > 200) {
+    alert('You winn!')
+  }
 }
 
 ghosts.forEach(ghost => moveGhost(ghost))
