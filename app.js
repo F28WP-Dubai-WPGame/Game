@@ -2,7 +2,7 @@ var mongojs = require("mongojs"); // using mongodb as our database.
 var db = mongojs('mongodb+srv://abdullah:discord123@@pacman.gwmyn.mongodb.net/myGame?retryWrites=true&w=majority/myGame', ['account']); // cloud mongodb to store sign in details.
 
 
-var express = require('express');           
+var express = require('express');
 var app = express();
 var serv = require('http').Server(app);
 var io = require('socket.io')(serv);
@@ -47,7 +47,7 @@ var addUser = function (data, cb) {              // inserting the user details i
 
 var uniqueCodes = [200, 300, 400, 500];                          // unique codes assigned to each player
 var currentScores = [0, 0, 0, 0]                                 // storing scores of each player in an array
-var userNames = ["Player 1", "Player 2", "Player 3", "Player 4"] // storing usernames of the players in an array
+var userNames = []                                               // storing usernames of the players in an array
 io.sockets.on('connection', function (socket) {                  // socket connection
 
   socket.on('player-joined', function () {                       // when a player joins we assign them a unique code
@@ -86,24 +86,12 @@ io.sockets.on('connection', function (socket) {                  // socket conne
     }
   })
 
-  // setInterval(function () {
-
-  //   for (var i = 0; i < 4; i++) {
-  //     if (currentScores[i] >= 200) {
-  //       var winningPlayer = userNames[i];
-  //       socket.emit('player-won', winningPlayer)
-  //       console.log(winningPlayer);
-  //     }
-  //   }
-  // }, 300)
-
-  socket.id = Math.random();          
-  SOCKET_LIST[socket.id] = socket;    
+  socket.id = Math.random();
+  SOCKET_LIST[socket.id] = socket;
 
   socket.on('signIn', function (data) {                    // signing in
     isValidPass(data, function (res) {
       if (res) {
-        // Player.onConnect(socket);
         socket.emit('signInResponse', { success: true });
       }
       else {
