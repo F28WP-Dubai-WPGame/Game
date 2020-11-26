@@ -193,26 +193,68 @@ body,html {
   background: orange;
 }
 
-.pacc {
+
+#signDiv {
   color:rgb(255, 238, 4);
+  font-size:35px;
   font-family: 'Galada', cursive;
-  margin-left: 460px;
-  font-size: 50px;
+  margin-top: 90px;
+  margin-left: 200px;
+  position: absolute;
+  top: 0px;
+  left: 300px;
+}
+#signDiv-username {
+  text-align:center;
+  font-size:28px;
+  font-family: 'Galada', cursive;
+  color:black;
+  /* width: 50px; */
+  border: 5px solid rgba(42, 12, 212, 0.26);
+  height:35px;
+  width:250px;
+  margin: 20px;
+  background: rgba(255, 255, 255, 0.822);
 }
 
-.userr {
-  color:rgb(255, 238, 4);
+#signDiv-password {
+  text-align:center;
+  font-size:28px;
   font-family: 'Galada', cursive;
-  margin-left:520px;
-  margin-top:-40px;
-  float:left;
+  color:black;
+  border: 5px solid rgb(42, 12, 212, 0.26);
+  height:35px;
+  width:250px;
+  margin: 20px;
+  margin-left: 29px;
+  background: rgba(255, 255, 255, 0.822);
+}
+
+#btns{
+  position: absolute;
+  left: 80px;
+  padding: 20px;
   
+
+}
+#signDiv-signIn {
+  font-size:28px;
+  font-family: 'Galada', cursive;
+  color:black;
+  border: 5px solid rgb(42, 12, 212, 0.26);
+  background: rgba(255, 255, 255, 0.822);
+  height:50px;
+  width:140px;
 }
 
-.passs {
-  color:rgb(255, 238, 4);
+#signDiv-signUp {
+  font-size:28px;
   font-family: 'Galada', cursive;
-  margin-left:-130px;
-  margin-top:45px;
-  float:left ;
+  color:black;
+  border: 5px solid rgb(42, 12, 212, 0.26);
+  background: rgba(255, 255, 255, 0.822);
+  position: absolute;
+  left: 200px;
+  height:50px;
+  width:140px;
 }
