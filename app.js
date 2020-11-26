@@ -45,20 +45,30 @@ var addUser = function (data, cb) {
   });
 }
 
-var roomno = 1;
+var time = 60;
+var count = 0;
+var clientNo = 0;
 var uniqueCodes = [200, 300, 400, 500];
 var currentScores = [0, 0, 0, 0]
 var userNames = ["Player 1", "Player 2", "Player 3", "Player 4"]
 io.sockets.on('connection', function (socket) {
-
-  socket.join('some room')
-
+  count++;
+  console.log(count);
   // //Increase roomno 2 clients are present in a room.
-  // if (io.nsps['/'].adapter.rooms["room-" + roomno] && io.nsps['/'].adapter.rooms["room-" + roomno].length > 1) roomno++;
-  // socket.join("room-" + roomno);
+  // if (io.nsps['/'].adapter.rooms["room-" + roomno] && io.nsps['/'].adapter.rooms["room-" + roomno].length > 1) {
+  //   roomno++;
+  //   socket.join("room-" + roomno);
+  // }
+
 
   // //Send this event to everyone in the room.
   // io.sockets.in("room-" + roomno).emit('connectToRoom', "You are in room no. " + roomno);
+
+  clientNo++;
+  roomNo = Math.round(clientNo / 2);
+  //Server puts client in a room with the room number as its name 
+  socket.join(roomNo);
+  socket.emit('roomNum', roomNo)
 
   socket.on('player-joined', function () {
     let temp = uniqueCodes.pop();
@@ -100,6 +110,13 @@ io.sockets.on('connection', function (socket) {
     // }
   })
 
+  setInterval(function () {
+    for (x in currentScores) {
+      if (currentScores[x] = 175) {
+        socket.emit('player-won', userNames[x])
+      }
+    }
+  }, 300)
 
 
   setInterval(function () {
@@ -147,6 +164,29 @@ io.sockets.on('connection', function (socket) {
   });
 
 });
+
+function startTimer(duration, display) {
+  var timer = duration, minutes, seconds;
+  setInterval(function () {
+    minutes = parseInt(timer / 60, 10);
+    seconds = parseInt(timer % 60, 10);
+
+    minutes = minutes < 10 ? "0" + minutes : minutes;
+    seconds = seconds < 10 ? "0" + seconds : seconds;
+
+    display.textContent = minutes + ":" + seconds;
+
+    if (--timer < 0) {
+      timer = duration;
+    }
+  }, 1000);
+}
+
+// window.onload = function () {
+//   var fiveMinutes = 60,
+//     display = document.querySelector('#timer');
+//   startTimer(fiveMinutes, display);
+// };
 
 // app.get('/test', function (req, res) {
 //   res.sendFile(__dirname + '/client/test.html');

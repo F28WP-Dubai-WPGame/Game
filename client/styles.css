@@ -1,6 +1,6 @@
 body,html {
   /* background: url(pacman.PNG) no-repeat center center fixed; */
-  background-color: black;
+  background-color: white;
   background-size: cover;
 }
 
@@ -189,6 +189,12 @@ body,html {
 
 .clyde2 {
   background: orange;
+}
+
+#timer {
+  position: relative;
+  top: 0;
+  right: 0;
 }
 
 .pacc {

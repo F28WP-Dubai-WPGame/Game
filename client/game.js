@@ -5,6 +5,7 @@ var signDivSignIn = document.getElementById('signDiv-signIn');
 var signDivSignUp = document.getElementById('signDiv-signUp');
 var signDivPassword = document.getElementById('signDiv-password');
 
+var timer = document.getElementById('timer')
 const grid = document.querySelector('.grid')
 var player1 = document.getElementById('player1');
 var player2 = document.getElementById('player2');
@@ -25,10 +26,10 @@ const width = 19;
 let username;
 let uniqueCode;
 
-// socket.on('connectToRoom', function (data) {
-//   document.body.innerHTML = '';
-//   document.write(data);
-// });
+socket.on('connectToRoom', function (data) {
+  document.body.innerHTML = '';
+  document.write(data);
+});
 
 signDivSignIn.onclick = function () {
   socket.emit('signIn', { username: signDivUsername.value, password: signDivPassword.value });
@@ -64,7 +65,7 @@ const layout = [
   1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, //5
   1, 2, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 1, //6
   1, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 1, //7
-  1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, //8
+  1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 1, //8
   0, 0, 0, 1, 2, 1, 2, 2, 2, 2, 2, 2, 2, 1, 2, 1, 0, 0, 0, //9
   0, 0, 0, 1, 2, 1, 2, 1, 9, 1, 9, 1, 2, 1, 2, 1, 0, 0, 0, //10
   1, 1, 1, 1, 2, 1, 2, 9, 9, 9, 9, 9, 2, 1, 2, 1, 1, 1, 1, //11
@@ -72,7 +73,7 @@ const layout = [
   1, 1, 1, 1, 2, 1, 2, 9, 9, 9, 9, 9, 2, 1, 2, 1, 1, 1, 1, //13
   0, 0, 0, 1, 2, 1, 2, 1, 9, 1, 9, 1, 2, 1, 2, 1, 0, 0, 0, //14
   0, 0, 0, 1, 2, 1, 2, 0, 0, 0, 0, 0, 2, 1, 2, 1, 0, 0, 0, //15
-  1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, //16
+  1, 1, 1, 1, 2, 1, 2, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, //16
   1, 2, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 1, 2, 2, 2, 2, 1, //17
   1, 2, 1, 1, 2, 1, 2, 1, 1, 1, 1, 1, 2, 1, 2, 1, 1, 2, 1, //18
   1, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1, //19
@@ -147,6 +148,16 @@ socket.on('allPlayers', function (data) {
   playerTwo = data[1];
   playerThree = data[2];
   playerFour = data[3];
+})
+
+// socket.on('roomNum', function (data) {
+//   console.log(`I am in room number ${data}`);
+// })
+
+socket.on('player-won', function (data) {
+  ghosts.forEach(ghost => clearInterval(ghost.timerId))
+  setTimeout(function () { alert(`${data} has won!!`); }, 500)
+  document.removeEventListener('keyup', movePacman)
 })
 
 setInterval(function () {
@@ -290,7 +301,6 @@ function checkForGameOver() {
     squares[pacmanCurrentIndex].classList.remove('pacman', 'pacman-left', 'pacman-up', 'pacman-down', 'pacman-right')
     ghosts.forEach(ghost => clearInterval(ghost.timerId))
     setTimeout(function () { alert("Game Over"); }, 500)
-    // socket.emit('playerGameOver', { code: uniqueCode, gameState: false })
     document.removeEventListener('keyup', movePacman)
   }
 }
