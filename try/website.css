@@ -1,0 +1,95 @@
+/*--------------------------------------------------------------
+# Header
+--------------------------------------------------------------*/
+#header {
+    height: 90px;
+    padding: 80px 0;
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    transition: all 0.5s;
+    z-index: 997;
+  }
+  
+  /* @media (max-width: 991px) {
+    #header {
+      background: rgba(6, 12, 34, 0.98);
+      height: 70px;
+      padding: 15px 0;
+      transition: all 0.5s;
+    }
+  } */
+  
+  @media (max-width: 1199px) {
+    #header .container {
+      max-width: 100%;
+    }
+  }
+  
+  #header.header-scrolled, #header.header-fixed {
+    background: rgba(6, 12, 34, 0.98);
+    height: 70px;
+    padding: 15px 0;
+    transition: all 0.5s;
+  }
+  
+  #header #logo h1 {
+    font-size: 36px;
+    margin: 0;
+    padding: 6px 0;
+    line-height: 1;
+    font-family: "Raleway", sans-serif;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  
+  #header #logo h1 span {
+    color: #f3eb2b;
+  }
+  
+  #header #logo h1 a, #header #logo h1 a:hover {
+    color: #fff;
+  }
+  
+  #header #logo img {
+    padding: 0;
+    margin: 0;
+    max-height: 100px;
+  }
+#test{
+  padding: 50px;
+}
+  /*--------------------------------------------------------------
+# Navigation Menu
+--------------------------------------------------------------*/
+/* The navigation bar */
+.navbar {
+  overflow: hidden;
+  background-color: #333;
+  position: fixed; /* Set the navbar to fixed position */
+  top: 0; /* Position the navbar at the top of the page */
+  width: 100%; /* Full width */
+}
+
+/* Links inside the navbar */
+.navbar a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+}
+
+/* Change background on mouse-over */
+.navbar a:hover {
+  background: #ddd;
+  color: black;
+}
+
+/* Main content */
+.main {
+  margin-top: 100px; /* Add a top margin to avoid content overlay */
+}
