@@ -1,51 +1,51 @@
 var socket = io();
-var signDiv = document.getElementById('signDiv');
-var signDivUsername = document.getElementById('signDiv-username');
-var signDivSignIn = document.getElementById('signDiv-signIn');
-var signDivSignUp = document.getElementById('signDiv-signUp');
-var signDivPassword = document.getElementById('signDiv-password');
+var signDiv = document.getElementById('signDiv');                   // accessing div signDiv
+var signDivUsername = document.getElementById('signDiv-username');  // accessing div signDiv-username
+var signDivSignIn = document.getElementById('signDiv-signIn');      // accessing div signDiv-signIn
+var signDivSignUp = document.getElementById('signDiv-signUp');      // accessing div signDiv-signUp
+var signDivPassword = document.getElementById('signDiv-password');  // accessing div signDiv-password
 
-var chatText = document.getElementById('chat-text');
-var chatInput = document.getElementById('chat-input');
-var chatForm = document.getElementById('chat-form');
+var chatText = document.getElementById('chat-text');                // accessing div chat-text
+var chatInput = document.getElementById('chat-input');              // accessing div chat-input
+var chatForm = document.getElementById('chat-form');                // accessing div chat-form
 
-var timer = document.getElementById('timer')
-const grid = document.querySelector('.grid')
-var player1 = document.getElementById('player1');
-var player2 = document.getElementById('player2');
-var player3 = document.getElementById('player3');
-var player4 = document.getElementById('player4');
+var timer = document.getElementById('timer')                        // accessing div timer
+const grid = document.querySelector('.grid')                        // accessing class grid
+var player1 = document.getElementById('player1');                   // accessing div player1
+var player2 = document.getElementById('player2');                   // accessing div player2
+var player3 = document.getElementById('player3');                   // accessing div player3
+var player4 = document.getElementById('player4');                   // accessing div player4
 
-let playerOne;
-let playerTwo;
-let playerThree;
-let playerFour;
+let playerOne;          // username of player1
+let playerTwo;          // username of player2
+let playerThree;        // username of player3
+let playerFour;         // username of player4
 
-let squares = []
-let pacmanCurrentIndex = 214;
-let pacmanPreviousIndex;
-let score = 0;
-const width = 19;
+let squares = []               // array of classes
+let pacmanCurrentIndex = 214;  // initial position of pacman
+let pacmanPreviousIndex;       // position of pacman before moving into next place
+let score = 0;                 // scores of the player
+const width = 19;              // width of the grid
 
-let username;
-let uniqueCode;
+let username;                  // username of the player
+let uniqueCode;                // unique code assigned to the player
 
-socket.on('connectToRoom', function (data) {
+socket.on('connectToRoom', function (data) {    //connecting to a room
   document.body.innerHTML = '';
   document.write(data);
 });
 
-signDivSignIn.onclick = function () {
+signDivSignIn.onclick = function () {                                                          // signing in
   socket.emit('signIn', { username: signDivUsername.value, password: signDivPassword.value });
   username = signDivUsername.value;
   console.log(username);
 }
 
-signDivSignUp.onclick = function () {
+signDivSignUp.onclick = function () {                                                          // signing up
   socket.emit('signUp', { username: signDivUsername.value, password: signDivPassword.value });
 }
 
-socket.on('signInResponse', function (data) {
+socket.on('signInResponse', function (data) {                                  // checking if sign in was successful
   if (data.success) {
     signDiv.style.display = 'none';
     gamestuff.style.display = 'inline-block';
@@ -54,14 +54,14 @@ socket.on('signInResponse', function (data) {
     alert("Sign in unsuccessful.");
 });
 
-socket.on('signUpResponse', function (data) {
+socket.on('signUpResponse', function (data) {                                 // checking if sign up was successful
   if (data.success) {
     alert("Sign up successful.");
   } else
     alert("Sign up unsuccessful.");
 });
 
-const layout = [
+const layout = [                                           // our gameboard 
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, //1
   1, 2, 2, 2, 2, 2, 2, 2, 2, 1, 2, 2, 2, 2, 2, 2, 2, 2, 1, //2
   1, 2, 1, 1, 2, 1, 1, 1, 2, 1, 2, 1, 1, 1, 2, 1, 1, 2, 1, //3
@@ -87,7 +87,7 @@ const layout = [
   1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, //23
 ];
 
-function createBoard() {
+function createBoard() {                           // creating the gameboard
   for (let i = 0; i < layout.length; i++) {
     const square = document.createElement('div')
     grid.appendChild(square)
@@ -117,11 +117,11 @@ function createBoard() {
 }
 createBoard();
 
-class Ghost {
-  constructor(className, startIndex, speed) {
+class Ghost {                                   //ghost class to create our ghosts
+  constructor(className, startIndex) {
     this.className = className
     this.startIndex = startIndex
-    this.speed = speed
+    this.speed = 250
     this.currentIndex = startIndex
     this.isScared = false
     this.timerId = NaN
@@ -129,38 +129,38 @@ class Ghost {
 }
 
 ghosts = [
-  new Ghost('blinky', 198, 250),
-  new Ghost('pinky', 200, 250),
-  new Ghost('inky', 236, 250),
-  new Ghost('clyde', 238, 250)
+  new Ghost('blinky', 198),
+  new Ghost('pinky', 200),
+  new Ghost('inky', 236),
+  new Ghost('clyde', 238)
 ]
 
-ghosts.forEach(ghost => {
+ghosts.forEach(ghost => {                                    // adding ghosts to our game board
   squares[ghost.currentIndex].classList.add(ghost.className)
   squares[ghost.currentIndex].classList.add('ghost')
 })
 
 
 socket.emit('player-joined')
-socket.on('pacman-code', function (data) {
+socket.on('pacman-code', function (data) {                   // assigning unique codes to our players
   squares[pacmanCurrentIndex].classList.add('pacman')
   uniqueCode = data.playerCode;
 })
 
-socket.on('allPlayers', function (data) {
+socket.on('allPlayers', function (data) {                    // usernames of the players
   playerOne = data[0];
   playerTwo = data[1];
   playerThree = data[2];
   playerFour = data[3];
 })
 
-socket.on('player-won', function (data) {
+socket.on('player-won', function (data) {                    // checking if a player has won
   ghosts.forEach(ghost => clearInterval(ghost.timerId))
   setTimeout(function () { alert(`${data} has won!!`); }, 500)
   document.removeEventListener('keyup', movePacman)
 })
 
-setInterval(function () {
+setInterval(function () {                                    // update the scores on the scoreboard every 100 milliseconds
   socket.emit('updateScores', { code: uniqueCode, currentScore: score })
   socket.on('allScores', function (data) {
     player1.innerHTML = playerOne + ":" + data[0];
@@ -171,12 +171,12 @@ setInterval(function () {
 }, 100)
 
 
-function move(currentIndex, previousIndex) {
+function move(currentIndex, previousIndex) {                // function to move the pacman
   squares[previousIndex].classList.remove('pacman', 'pacman-right', 'pacman-left', 'pacman-up', 'pacman-down')
   squares[currentIndex].classList.add('pacman')
 }
 
-document.addEventListener('keyup', movePacman)
+document.addEventListener('keyup', movePacman)              // moving the pacman in the direction of the respective arrow key pressed,
 
 function movePacman(event) {
 
@@ -187,9 +187,9 @@ function movePacman(event) {
       squares[pacmanCurrentIndex].classList.remove('pac-dot')
       score++;
     }
-    powerPelletEaten();
+    powerPelletEaten();           // function call to check if the pacman has eaten the powerpellet
 
-    pacmanPreviousIndex = pacmanCurrentIndex;
+    pacmanPreviousIndex = pacmanCurrentIndex;                // store currentindex of pacman before going to next position
     pacmanCurrentIndex = pacmanCurrentIndex - 1
     move(pacmanCurrentIndex, pacmanPreviousIndex);
     squares[pacmanCurrentIndex].classList.add('pacman-left')
@@ -241,16 +241,16 @@ function movePacman(event) {
     move(pacmanCurrentIndex, pacmanPreviousIndex);
     squares[pacmanCurrentIndex].classList.add('pacman-down')
   }
-  if (score > 200) {
+  if (score > 200) {    // if score is greater than 200, the player wins
     alert('You winn!')
   }
 }
 
-ghosts.forEach(ghost => moveGhost(ghost))
+ghosts.forEach(ghost => moveGhost(ghost))        // moving all the ghosts
 
 function moveGhost(ghost) {
   const directions = [-1, +1, width, -width]
-  let direction = directions[Math.floor(Math.random() * directions.length)]
+  let direction = directions[Math.floor(Math.random() * directions.length)]        //moving ghosts in random direction
 
   ghost.timerId = setInterval(function () {
     //if the next squre your ghost is going to go to does not have a ghost and does not have a wall
@@ -277,11 +277,11 @@ function moveGhost(ghost) {
       score += 100
       squares[ghost.currentIndex].classList.add(ghost.className, 'ghost')
     }
-    checkForGameOver()
+    checkForGameOver()                                                                 // calling function to see if the player lost
   }, ghost.speed)
 }
 
-function powerPelletEaten() {
+function powerPelletEaten() {            // check if power pellet is eaten
   if (squares[pacmanCurrentIndex].classList.contains('power-pellet')) {
     score += 10
     ghosts.forEach(ghost => ghost.isScared = true)
@@ -306,7 +306,7 @@ function checkForGameOver() {
 }
 
 
-socket.on('addToChat', function (data) {
+socket.on('addToChat', function (data) {            // chat
   chatText.innerHTML += '<div>' + data + '</div>';
 });
 

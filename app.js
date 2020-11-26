@@ -1,8 +1,8 @@
-var mongojs = require("mongojs");
-var db = mongojs('mongodb+srv://abdullah:discord123@@pacman.gwmyn.mongodb.net/myGame?retryWrites=true&w=majority/myGame', ['account']);
+var mongojs = require("mongojs"); // using mongodb as our database.
+var db = mongojs('mongodb+srv://abdullah:discord123@@pacman.gwmyn.mongodb.net/myGame?retryWrites=true&w=majority/myGame', ['account']); // cloud mongodb to store sign in details.
 
 
-var express = require('express');
+var express = require('express');           
 var app = express();
 var serv = require('http').Server(app);
 var io = require('socket.io')(serv);
@@ -17,12 +17,12 @@ if (port == null || port == "") {
   port = 3000;
 }
 serv.listen(port, function () {
-  console.log('Server in up and running!');
+  console.log('Server is up and running!');
 });
 
 var SOCKET_LIST = {};
 
-var isValidPass = function (data, cb) {
+var isValidPass = function (data, cb) {         // checking if the password and username match
   db.account.find({ username: data.username, password: data.password }, function (err, res) {
     if (res.length > 0)
       cb(true);
@@ -30,7 +30,7 @@ var isValidPass = function (data, cb) {
       cb(false);
   });
 }
-var isUserTaken = function (data, cb) {
+var isUserTaken = function (data, cb) {         // checking if the username is taken
   db.account.find({ username: data.username }, function (err, res) {
     if (res.length > 0)
       cb(true);
@@ -38,27 +38,26 @@ var isUserTaken = function (data, cb) {
       cb(false);
   });
 }
-var addUser = function (data, cb) {
+var addUser = function (data, cb) {              // inserting the user details into our database.
   db.account.insert({ username: data.username, password: data.password }, function (err) {
     cb();
   });
 }
 
-var count = 0;
-var clientNo = 0;
-var uniqueCodes = [200, 300, 400, 500];
-var currentScores = [0, 0, 0, 0]
-var userNames = ["Player 1", "Player 2", "Player 3", "Player 4"]
-io.sockets.on('connection', function (socket) {
 
-  socket.on('player-joined', function () {
+var uniqueCodes = [200, 300, 400, 500];                          // unique codes assigned to each player
+var currentScores = [0, 0, 0, 0]                                 // storing scores of each player in an array
+var userNames = ["Player 1", "Player 2", "Player 3", "Player 4"] // storing usernames of the players in an array
+io.sockets.on('connection', function (socket) {                  // socket connection
+
+  socket.on('player-joined', function () {                       // when a player joins we assign them a unique code
     let temp = uniqueCodes.pop();
     socket.emit('pacman-code', { playerCode: temp })
     console.log(temp);
   })
 
   setInterval(function () {
-    socket.on('updateScores', function (data) {
+    socket.on('updateScores', function (data) {                  // updating scores for each player
       if (data.code == 500) {
         currentScores[0] = data.currentScore;
       } else if (data.code == 400) {
@@ -70,12 +69,12 @@ io.sockets.on('connection', function (socket) {
       }
     })
 
-    socket.emit('allScores', currentScores)
+    socket.emit('allScores', currentScores)                      // emiting the scores and usernames of all players 
     socket.emit('allPlayers', userNames)
 
-  }, 100)
+  }, 100)                                                        // all of this is happening every 100 milliseconds
 
-  socket.on('currentUserName', function (data) {
+  socket.on('currentUserName', function (data) {                 // updating usernames for each player
     if (data.code == 500) {
       userNames[0] = data.clientName;
     } else if (data.code == 400) {
@@ -98,10 +97,10 @@ io.sockets.on('connection', function (socket) {
   //   }
   // }, 300)
 
-  socket.id = Math.random();
-  SOCKET_LIST[socket.id] = socket;
+  socket.id = Math.random();          
+  SOCKET_LIST[socket.id] = socket;    
 
-  socket.on('signIn', function (data) {
+  socket.on('signIn', function (data) {                    // signing in
     isValidPass(data, function (res) {
       if (res) {
         // Player.onConnect(socket);
@@ -112,7 +111,7 @@ io.sockets.on('connection', function (socket) {
       }
     });
   });
-  socket.on('signUp', function (data) {
+  socket.on('signUp', function (data) {                 // signing up
     isUserTaken(data, function (res) {
       if (res) {
         socket.emit('signUpResponse', { success: false });
@@ -129,7 +128,7 @@ io.sockets.on('connection', function (socket) {
 
   });
 
-  socket.on('sendMsgToServer', function (data) {
+  socket.on('sendMsgToServer', function (data) {                     // chat
     var playerName = data[1];
     for (var i in SOCKET_LIST) {
       SOCKET_LIST[i].emit('addToChat', playerName + ': ' + data[0]);
