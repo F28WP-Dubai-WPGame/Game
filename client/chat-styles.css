@@ -1,51 +1,9 @@
-.container {
-  border: 2px solid #dedede;
-  background-color: #f1f1f1;
-  border-radius: 5px;
-  padding: 1px;
-  margin: 5px 0;
-}
-
-.darker {
-  border-color: #ccc;
-  background-color: #ddd;
-}
-
-.container::after {
-  content: "";
-  clear: both;
-  display: table;
-}
-
-.container img {
-  float: left;
-  max-width: 45px;
-  width: 100%;
-  margin-right: 20px;
-  margin-top: 15px;
-  border-radius: 50%;
-}
-
-.container img.right {
-  float: right;
-  margin-left: 20px;
-  margin-right:0;
-}
-
-.time-right {
-  float: right;
-  color: #aaa;
-}
-
-.time-left {
-  float: left;
-  color: #999;
-}
-
 .chat {
   position: absolute;
   bottom: 0;
   left: 0;
+  border: white solid 1px;
+  background-color: white;
 }
 
 /* #chat-text {

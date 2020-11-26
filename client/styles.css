@@ -1,6 +1,6 @@
 body,html {
-  /* background: url(pacman.PNG) no-repeat center center fixed; */
-  background-color: white;
+  background: url(pacman.PNG) no-repeat center center fixed;
+  background-color: black;
   background-size: cover;
 }
 

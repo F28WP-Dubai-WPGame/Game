@@ -5,6 +5,10 @@ var signDivSignIn = document.getElementById('signDiv-signIn');
 var signDivSignUp = document.getElementById('signDiv-signUp');
 var signDivPassword = document.getElementById('signDiv-password');
 
+var chatText = document.getElementById('chat-text');
+var chatInput = document.getElementById('chat-input');
+var chatForm = document.getElementById('chat-form');
+
 var timer = document.getElementById('timer')
 const grid = document.querySelector('.grid')
 var player1 = document.getElementById('player1');
@@ -305,3 +309,13 @@ function checkForGameOver() {
   }
 }
 
+
+socket.on('addToChat', function (data) {
+  chatText.innerHTML += '<div>' + data + '</div>';
+});
+
+chatForm.onsubmit = function (e) {
+  e.preventDefault();
+  socket.emit('sendMsgToServer', [chatInput.value, username]);
+  chatInput.value = '';
+}
