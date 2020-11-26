@@ -154,10 +154,6 @@ socket.on('allPlayers', function (data) {
   playerFour = data[3];
 })
 
-// socket.on('roomNum', function (data) {
-//   console.log(`I am in room number ${data}`);
-// })
-
 socket.on('player-won', function (data) {
   ghosts.forEach(ghost => clearInterval(ghost.timerId))
   setTimeout(function () { alert(`${data} has won!!`); }, 500)
@@ -247,9 +243,6 @@ function movePacman(event) {
   }
 }
 
-// socket.on('startGame', function () {
-//   ghosts.forEach(ghost => moveGhost(ghost))
-// })
 ghosts.forEach(ghost => moveGhost(ghost))
 
 function moveGhost(ghost) {

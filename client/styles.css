@@ -191,12 +191,6 @@ body,html {
   background: orange;
 }
 
-#timer {
-  position: relative;
-  top: 0;
-  right: 0;
-}
-
 .pacc {
   color:rgb(255, 238, 4);
   font-family: 'Galada', cursive;

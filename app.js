@@ -22,7 +22,6 @@ serv.listen(port, function () {
 
 var SOCKET_LIST = {};
 
-
 var isValidPass = function (data, cb) {
   db.account.find({ username: data.username, password: data.password }, function (err, res) {
     if (res.length > 0)
@@ -45,30 +44,12 @@ var addUser = function (data, cb) {
   });
 }
 
-var time = 60;
 var count = 0;
 var clientNo = 0;
 var uniqueCodes = [200, 300, 400, 500];
 var currentScores = [0, 0, 0, 0]
 var userNames = ["Player 1", "Player 2", "Player 3", "Player 4"]
 io.sockets.on('connection', function (socket) {
-  count++;
-  console.log(count);
-  // //Increase roomno 2 clients are present in a room.
-  // if (io.nsps['/'].adapter.rooms["room-" + roomno] && io.nsps['/'].adapter.rooms["room-" + roomno].length > 1) {
-  //   roomno++;
-  //   socket.join("room-" + roomno);
-  // }
-
-
-  // //Send this event to everyone in the room.
-  // io.sockets.in("room-" + roomno).emit('connectToRoom', "You are in room no. " + roomno);
-
-  clientNo++;
-  roomNo = Math.round(clientNo / 2);
-  //Server puts client in a room with the room number as its name 
-  socket.join(roomNo);
-  socket.emit('roomNum', roomNo)
 
   socket.on('player-joined', function () {
     let temp = uniqueCodes.pop();
@@ -92,7 +73,6 @@ io.sockets.on('connection', function (socket) {
     socket.emit('allScores', currentScores)
     socket.emit('allPlayers', userNames)
 
-    // console.log(currentScores);
   }, 100)
 
   socket.on('currentUserName', function (data) {
@@ -105,17 +85,9 @@ io.sockets.on('connection', function (socket) {
     } else if (data.code == 200) {
       userNames[3] = data.clientName;
     }
-    // if (userNames[0] !== "Player 1" && userNames[1] !== "Player 2" && userNames[2] !== "Player 3" && userNames[3] !== "Player 4") {
-    //   socket.emit('startGame')
-    // }
   })
 
   setInterval(function () {
-    // for (x in currentScores) {
-    //   if (currentScores[x] = 175) {
-    //     socket.emit('player-won', userNames[x])
-    //   }
-    // }
 
     for (var i = 0; i < 4; i++) {
       if (currentScores[i] >= 200) {
@@ -125,11 +97,6 @@ io.sockets.on('connection', function (socket) {
       }
     }
   }, 300)
-
-
-  setInterval(function () {
-    // console.log(userNames);
-  }, 3000)
 
   socket.id = Math.random();
   SOCKET_LIST[socket.id] = socket;
@@ -162,8 +129,6 @@ io.sockets.on('connection', function (socket) {
 
   });
 
-
-
   socket.on('sendMsgToServer', function (data) {
     var playerName = data[1];
     for (var i in SOCKET_LIST) {
@@ -172,43 +137,3 @@ io.sockets.on('connection', function (socket) {
   });
 
 });
-
-function startTimer(duration, display) {
-  var timer = duration, minutes, seconds;
-  setInterval(function () {
-    minutes = parseInt(timer / 60, 10);
-    seconds = parseInt(timer % 60, 10);
-
-    minutes = minutes < 10 ? "0" + minutes : minutes;
-    seconds = seconds < 10 ? "0" + seconds : seconds;
-
-    display.textContent = minutes + ":" + seconds;
-
-    if (--timer < 0) {
-      timer = duration;
-    }
-  }, 1000);
-}
-
-// window.onload = function () {
-//   var fiveMinutes = 60,
-//     display = document.querySelector('#timer');
-//   startTimer(fiveMinutes, display);
-// };
-
-// app.get('/test', function (req, res) {
-//   res.sendFile(__dirname + '/client/test.html');
-// });
-
-// app.post('/test', function (req, res) {
-//   // setTimeout(function () {
-//   //   res.redirect('/')
-//   // }, 5000)
-//   res.redirect('/')
-// })
-
-
-// io.sockets.on('connection', function (socket) {
-
-
-// })
