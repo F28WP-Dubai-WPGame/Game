@@ -111,9 +111,17 @@ io.sockets.on('connection', function (socket) {
   })
 
   setInterval(function () {
-    for (x in currentScores) {
-      if (currentScores[x] = 175) {
-        socket.emit('player-won', userNames[x])
+    // for (x in currentScores) {
+    //   if (currentScores[x] = 175) {
+    //     socket.emit('player-won', userNames[x])
+    //   }
+    // }
+
+    for (var i = 0; i < 4; i++) {
+      if (currentScores[i] >= 200) {
+        var winningPlayer = userNames[i];
+        socket.emit('player-won', winningPlayer)
+        console.log(winningPlayer);
       }
     }
   }, 300)
