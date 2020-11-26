@@ -47,7 +47,7 @@ var addUser = function (data, cb) {              // inserting the user details i
 
 var uniqueCodes = [200, 300, 400, 500];                          // unique codes assigned to each player
 var currentScores = [0, 0, 0, 0]                                 // storing scores of each player in an array
-var userNames = []                                               // storing usernames of the players in an array
+var userNames = ["Player 1", "Player 2", "Player 3", "Player 4"]                                               // storing usernames of the players in an array
 io.sockets.on('connection', function (socket) {                  // socket connection
 
   socket.on('player-joined', function () {                       // when a player joins we assign them a unique code

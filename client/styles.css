@@ -40,7 +40,9 @@ body,html {
 .score {
   height: 40px;
   width: 200px;
-  border: solid #0000cc;
+  border: solid  #c94c4c;
+  background-color: #c94c4c;
+  text-align: center;
 }
 
 .scoreTest {
