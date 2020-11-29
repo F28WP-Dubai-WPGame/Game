@@ -12,22 +12,26 @@ body {
   position: fixed; /* Set the navbar to fixed position */
   top: 0; /* Position the navbar at the top of the page */
   width: 100%; /* Full width */
+  height: 10%;
 }
 
 /* Links inside the navbar */
 .navbar a {
   float: left;
   display: block;
-  color: #478fe2;
+  color: white;
   text-align: center;
-  padding: 14px 16px;
+  padding: 22px 16px;
   text-decoration: none;
+  width:6%;
+  height: 100%;
+  font-size: 20px;
 }
 
 
 /* Change background on mouse-over */
 .navbar a:hover {
-  background: rgb(161, 196, 80);
+  background: rgb(248, 225, 15);
   color: black;
 }
 
@@ -58,12 +62,46 @@ body {
  }
 
  .abtgame {
-     color:yellow;
-     font-size:30px;
-     margin-top:50px;
- }
+  font-family: 'Galada', cursive;
+  color:rgb(254, 255, 220);
+  font-size:30px;
+  margin-top:10px;
+}
 
  .abtgame1 {
-    color:yellow;
-    font-size:30px;
+  font-family: 'Galada', cursive;
+  color:rgb(254, 255, 220);
+  font-size:30px;
+}
+
+.row{
+  border: solid 10px #000;
+  background-color: rgba(0, 0, 0, 0.6);
+  width:90%;
+  margin-top: 110px;
+  margin-bottom: 20px;
+  margin-left: auto ;
+  margin-right: auto ;
+}
+.block{
+  display:inline-block;
+}
+.intro-container a{
+  font-family: 'Galada', cursive;
+  border-radius: 12px;
+  border: solid 3px rgb(255, 255, 255);
+  width:400px;
+  background-color: rgba(0, 0, 0, 0.8);
+  
+  color: rgb(255, 217, 0);
+  text-align: center;
+  text-decoration: none;
+  font-size: 70px;
+  position: absolute;
+  top: 440px;
+  left:550px;
+}
+
+.intro-container a:hover{
+  font-size: 75px;
 }
